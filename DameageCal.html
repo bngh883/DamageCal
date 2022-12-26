@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>  <!--HTML(Hyper-Text Markup Language)-->
+    <head>  <!--ヘッダ部-->
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="DamageCal.css" />
+        <title>ポケモンダメージ計算ツール</title> <!--ここはページの名前-->
+    </head>
+    <body>
+        <h1>ダメージ計算機</h1>
+
+        <!--メッセージ入力エリア-->
+        <form id="form1" name="form1">
+            <label for="attack">こうげき とくこう </label>
+            <input type="number" id="attack"> 
+            <br>
+            <label for="defence">ぼうぎょ とくぼう </label>
+            <input type="number" id="defence"> 
+            <br>
+            <label for="power">いりょく </label>
+            <input type="number" id="power"> 
+            <br>
+            <label for="effect">相性補正 </label>
+            <input type="number" id="effect"> 
+            <br>
+            <label for="STAB">タイプ一致 </label>
+            <input type="checkbox" id="STAB" name="stab"> <!--SameTypeAttackBonus-->
+            <br> 
+            <input type="button" onclick="clickResultDisp()" value="計算">
+            <br>
+            <label id="result"></label>
+        </form>
+
+        <!--ボタンクリック後の処理-->
+        <script language="javascript" type="text/javascript">
+            function clickResultDisp(){
+                var atk = document.getElementById("attack").value;
+                var def = document.getElementById("defence").value;
+                var pwr = document.getElementById("power").value;
+                var efc = document.getElementById("effect").value;
+                atk = parseInt(atk); def = parseInt(def); pwr = parseInt(pwr); efc = parseInt(efc);
+                var result;
+                result = 22 * parseInt(pwr * atk / def);
+                result = parseInt(result /50) +2;
+                var min;
+                min = parseInt(0.85 * result);
+                if (document.getElementById("STAB").checked){
+                    result = parseInt(result * 1.5);
+                    min = parseInt(min * 1.5);
+                }
+                result = parseInt(result * efc);
+                min = parseInt(min * efc);
+                document.getElementById("result").innerHTML = String(min) + ' ~ ' + String(result);
+            }
+        </script>
+    </body>
+</html>
