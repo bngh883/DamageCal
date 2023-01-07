@@ -10,6 +10,7 @@
         <h1>ダメージ計算機</h1>
 
         <div class="environment">
+            <h2>環境</h2>
             <div class="battlestyle">
                 <input type="radio" name="battlestyle" id="single"><label for="single" class="label">シングル</label>
                 <input type="radio" name="battlestyle" id="double"><label for="double" class="label">ダブル</label> 
@@ -33,8 +34,201 @@
             <br><br>
         </div>
 
-        <!--メッセージ入力エリア-->
+        <!--ポケモン1-->
         <form id="form1" name="form1">
+            <h3>ポケモン1</h3>
+            <!--基本情報-->
+            <div class="row">
+                <input type="text" id="poke-name1">
+                <select class="nature">
+                    <option value="1">いじっぱり A+C-</option>
+                    <option value="2">ひかえめ C+A-</option>
+                    <option value="3">ようき S+C-</option>
+                    <option value="4">おくびょう S+A-</option>
+                    <option value="5">ずぶとい B+A-</option>
+                    <option value="6">わんぱく B+C-</option>
+                    <option value="7">おだやか D+A-</option>
+                    <option value="8">しんちょう D+C-</option>
+                    <option value="9">ゆうかん A+S-</option>
+                    <option value="10">れいせい C+S-</option>
+                    <option value="11">のんき B+S-</option>
+                    <option value="12">なまいき D+S-</option>
+                    <option value="13">むじゃき S+D-</option>
+                    <option value="14">せっかち S+B-</option>
+                    <option value="15">さみしがり A+B-</option>
+                    <option value="16">おっとり A+D-</option>
+                    <option value="17">やんちゃ A+D-</option>
+                    <option value="18">うっかりや C+D-</option>
+                    <option value="19">がんばりや</option>
+                    <option value="20">のうてんき B+D-</option>
+                    <option value="21">おとなしい D+B-</option>
+                </select>
+                <input type="button" onclick="SearchPokemon()" value="実数値表示">
+            </div>
+            <!--数値群-->
+            <div class="row">
+                <table class="stats_table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>HP</th>
+                            <th>攻撃</th>
+                            <th>防御</th>
+                            <th>特攻</th>
+                            <th>特防</th>
+                            <th>素早</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>個体</th>
+                            <td>
+                                <input type="number" max="31" min="0" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" class="IV">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th>努力</th>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" class="EV">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" class="EV">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" class="EV">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" class="EV">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" class="EV">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" class="EV">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th>ランク</th>
+                            <td></td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option value="6">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option value="6">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option value="6">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option value="6">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option value="6">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th>実数</th>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <label for="attack">こうげき とくこう </label>
             <input type="number" id="attack"> 
             <br>
