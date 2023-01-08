@@ -12,12 +12,12 @@
         <div class="environment">
             <h2>環境</h2>
             <div class="battlestyle">
-                <input type="radio" name="battlestyle" id="single"><label for="single" class="label">シングル</label>
+                <input type="radio" name="battlestyle" id="single" checked="checked"><label for="single" class="label">シングル</label>
                 <input type="radio" name="battlestyle" id="double"><label for="double" class="label">ダブル</label> 
             </div>
             <br><br>
             <div class="weather">
-                <input type="radio" name="weather" id="normal"><label for="normal" class="label">通常</label>
+                <input type="radio" name="weather" id="normal" checked="checked"><label for="normal" class="label">通常</label>
                 <input type="radio" name="weather" id="sunny"><label for="sunny" class="label">晴</label>
                 <input type="radio" name="weather" id="rain"><label for="rain" class="label">雨</label>
                 <input type="radio" name="weather" id="sandstorm"><label for="sandstorm" class="label">砂</label>
@@ -25,7 +25,7 @@
             </div>
             <br><br>
             <div class="field">
-                <input type="radio" name="field" id="normal2"><label for="normal2" class="label">通常</label>
+                <input type="radio" name="field" id="normal2" checked="checked"><label for="normal2" class="label">通常</label>
                 <input type="radio" name="field" id="electric"><label for="electric" class="label">エレキ</label>
                 <input type="radio" name="field" id="psychic"><label for="psychic" class="label">サイコ</label>
                 <input type="radio" name="field" id="glass"><label for="glass" class="label">グラス</label>
@@ -39,35 +39,36 @@
             <h3>ポケモン1</h3>
             <!--基本情報-->
             <div class="row">
-                <input type="text" id="poke-name1">
+                <input type="text" class="poke-name">
                 <select class="nature">
-                    <option value="1">いじっぱり A+C-</option>
-                    <option value="2">ひかえめ C+A-</option>
-                    <option value="3">ようき S+C-</option>
-                    <option value="4">おくびょう S+A-</option>
-                    <option value="5">ずぶとい B+A-</option>
-                    <option value="6">わんぱく B+C-</option>
-                    <option value="7">おだやか D+A-</option>
-                    <option value="8">しんちょう D+C-</option>
-                    <option value="9">ゆうかん A+S-</option>
-                    <option value="10">れいせい C+S-</option>
-                    <option value="11">のんき B+S-</option>
-                    <option value="12">なまいき D+S-</option>
-                    <option value="13">むじゃき S+D-</option>
-                    <option value="14">せっかち S+B-</option>
-                    <option value="15">さみしがり A+B-</option>
-                    <option value="16">おっとり A+D-</option>
-                    <option value="17">やんちゃ A+D-</option>
-                    <option value="18">うっかりや C+D-</option>
-                    <option value="19">がんばりや</option>
-                    <option value="20">のうてんき B+D-</option>
-                    <option value="21">おとなしい D+B-</option>
+                    <option value="21">いじっぱり A+C-</option>
+                    <option value="3">ひかえめ C+A-</option>
+                    <option value="25">ようき S+C-</option>
+                    <option value="5">おくびょう S+A-</option>
+                    <option value="2">ずぶとい B+A-</option>
+                    <option value="22">わんぱく B+C-</option>
+                    <option value="4">おだやか D+A-</option>
+                    <option value="24">しんちょう D+C-</option>
+                    <option value="41">ゆうかん A+S-</option>
+                    <option value="43">れいせい C+S-</option>
+                    <option value="42">のんき B+S-</option>
+                    <option value="44">なまいき D+S-</option>
+                    <option value="35">むじゃき S+D-</option>
+                    <option value="15">せっかち S+B-</option>
+                    <option value="11">さみしがり A+B-</option>
+                    <option value="33">おっとり C+D-</option>
+                    <option value="31">やんちゃ A+D-</option>
+                    <option value="13">うっかりや C+B-</option>
+                    <option value="100">がんばりや</option>
+                    <option value="32">のうてんき B+D-</option>
+                    <option value="14">おとなしい D+B-</option>
                 </select>
-                <input type="button" onclick="SearchPokemon()" value="実数値表示">
+                <input type="button" onclick="SearchPokemon(1)" value="実数値表示">
             </div>
             <!--数値群-->
             <div class="row">
                 <table class="stats_table">
+                    <!--ヘッダ-->
                     <thead>
                         <tr>
                             <th></th>
@@ -80,52 +81,82 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!--個体値-->
                         <tr>
                             <th>個体</th>
                             <td>
-                                <input type="number" max="31" min="0" class="IV">
+                                <input type="number" max="31" min="0" value="31" class="IV">
                             </td>
                             <td>
-                                <input type="number" max="31" min="0" class="IV">
+                                <input type="number" max="31" min="0" value="31" class="IV">
                             </td>
                             <td>
-                                <input type="number" max="31" min="0" class="IV">
+                                <input type="number" max="31" min="0" value="31" class="IV">
                             </td>
                             <td>
-                                <input type="number" max="31" min="0" class="IV">
+                                <input type="number" max="31" min="0" value="31" class="IV">
                             </td>
                             <td>
-                                <input type="number" max="31" min="0" class="IV">
+                                <input type="number" max="31" min="0" value="31" class="IV">
                             </td>
                             <td>
-                                <input type="number" max="31" min="0" class="IV">
+                                <input type="number" max="31" min="0" value="31" class="IV">
                             </td>
                         </tr>
-                    </tbody>
-                    <tbody>
+                        <!--努力値-->
                         <tr>
                             <th>努力</th>
                             <td>
-                                <input type="number" max="252" min="0" step="4" class="EV">
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
                             </td>
                             <td>
-                                <input type="number" max="252" min="0" step="4" class="EV">
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
                             </td>
                             <td>
-                                <input type="number" max="252" min="0" step="4" class="EV">
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
                             </td>
                             <td>
-                                <input type="number" max="252" min="0" step="4" class="EV">
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
                             </td>
                             <td>
-                                <input type="number" max="252" min="0" step="4" class="EV">
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
                             </td>
                             <td>
-                                <input type="number" max="252" min="0" step="4" class="EV">
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                            </td>
+                            <td>
+                                <label class="EV-total">残:508</label>
                             </td>
                         </tr>
-                    </tbody>
-                    <tbody>
+                        <!--ぶっぱボタン-->
+                        <tr>
+                            <th></th>
+                            <td>
+                                <input type="button" onclick="Mufuri(0)" value="0">
+                                <input type="button" onclick="Buppa(0)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri(1)" value="0">
+                                <input type="button" onclick="Buppa(1)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri(2)" value="0">
+                                <input type="button" onclick="Buppa(2)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri(3)" value="0">
+                                <input type="button" onclick="Buppa(3)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri(4)" value="0">
+                                <input type="button" onclick="Buppa(4)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri(5)" value="0">
+                                <input type="button" onclick="Buppa(5)" value="252">
+                            </td>
+                        </tr>
+                        <!--ランク補正-->
                         <tr>
                             <th>ランク</th>
                             <td></td>
@@ -137,7 +168,7 @@
                                     <option value="3">+3</option>
                                     <option value="2">+2</option>
                                     <option value="1">+1</option>
-                                    <option value="6">-</option>
+                                    <option selected="selected" value="0">-</option>
                                     <option value="-1">-1</option>
                                     <option value="-2">-2</option>
                                     <option value="-3">-3</option>
@@ -154,7 +185,7 @@
                                     <option value="3">+3</option>
                                     <option value="2">+2</option>
                                     <option value="1">+1</option>
-                                    <option value="6">-</option>
+                                    <option selected="selected" value="0">-</option>
                                     <option value="-1">-1</option>
                                     <option value="-2">-2</option>
                                     <option value="-3">-3</option>
@@ -171,7 +202,7 @@
                                     <option value="3">+3</option>
                                     <option value="2">+2</option>
                                     <option value="1">+1</option>
-                                    <option value="6">-</option>
+                                    <option selected="selected" value="0">-</option>
                                     <option value="-1">-1</option>
                                     <option value="-2">-2</option>
                                     <option value="-3">-3</option>
@@ -188,7 +219,7 @@
                                     <option value="3">+3</option>
                                     <option value="2">+2</option>
                                     <option value="1">+1</option>
-                                    <option value="6">-</option>
+                                    <option selected="selected" value="0">-</option>
                                     <option value="-1">-1</option>
                                     <option value="-2">-2</option>
                                     <option value="-3">-3</option>
@@ -205,7 +236,7 @@
                                     <option value="3">+3</option>
                                     <option value="2">+2</option>
                                     <option value="1">+1</option>
-                                    <option value="6">-</option>
+                                    <option selected="selected" value="0">-</option>
                                     <option value="-1">-1</option>
                                     <option value="-2">-2</option>
                                     <option value="-3">-3</option>
@@ -215,8 +246,7 @@
                                 </select>
                             </td>
                         </tr>
-                    </tbody>
-                    <tbody>
+                        <!--実数値-->
                         <tr>
                             <th>実数</th>
                             <td class="status"></td>
@@ -229,32 +259,244 @@
                     </tbody>
                 </table>
             </div>
-            <label for="attack">こうげき とくこう </label>
-            <input type="number" id="attack"> 
-            <br>
-            <label for="attack">攻撃ポケモン</label><input type="text" id="attack">
-            <label for="aev">こうげき努力値</label><input type="number" id="aev">
-            <label for="cev">とくこう努力値</label><input type="number" id="cev">
-            <br>
-            <label for="defence">ぼうぎょ とくぼう </label>
-            <input type="number" id="defence"> 
-            <br>
-            <label for="attack">防御ポケモン</label><input type="text" id="attack">
-            <label for="bev">ぼうぎょ努力値</label><input type="number" id="bev">
-            <label for="dev">とくぼう努力値</label><input type="number" id="dev">
-            <br>
-            <label for="power">いりょく </label>
-            <input type="number" id="power"> 
-            <br>
-            <label for="effect">相性補正 </label>
-            <input type="number" id="effect"> 
-            <br>
-            <label for="STAB">タイプ一致 </label>
-            <input type="checkbox" id="STAB" name="stab"> <!--SameTypeAttackBonus-->
-            <br> 
-            <input type="button" onclick="clickResultDisp()" value="計算">
-            <br>
-            <label id="result"></label>
         </form>
+        <!--ポケモン2-->
+        <form id="form2" name="form2">
+            <h4>ポケモン2</h4>
+            <!--基本情報-->
+            <div class="row">
+                <input type="text" class="poke-name">
+                <select class="nature">
+                    <option value="21">いじっぱり A+C-</option>
+                    <option value="3">ひかえめ C+A-</option>
+                    <option value="25">ようき S+C-</option>
+                    <option value="5">おくびょう S+A-</option>
+                    <option value="2">ずぶとい B+A-</option>
+                    <option value="22">わんぱく B+C-</option>
+                    <option value="4">おだやか D+A-</option>
+                    <option value="24">しんちょう D+C-</option>
+                    <option value="41">ゆうかん A+S-</option>
+                    <option value="43">れいせい C+S-</option>
+                    <option value="42">のんき B+S-</option>
+                    <option value="44">なまいき D+S-</option>
+                    <option value="35">むじゃき S+D-</option>
+                    <option value="15">せっかち S+B-</option>
+                    <option value="11">さみしがり A+B-</option>
+                    <option value="33">おっとり C+D-</option>
+                    <option value="31">やんちゃ A+D-</option>
+                    <option value="13">うっかりや C+B-</option>
+                    <option value="100">がんばりや</option>
+                    <option value="32">のうてんき B+D-</option>
+                    <option value="14">おとなしい D+B-</option>
+                </select>
+                <input type="button" onclick="SearchPokemon(2)" value="実数値表示">
+            </div>
+            <!--数値群-->
+            <div class="row">
+                <table class="stats_table">
+                    <!--ヘッダ-->
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>HP</th>
+                            <th>攻撃</th>
+                            <th>防御</th>
+                            <th>特攻</th>
+                            <th>特防</th>
+                            <th>素早</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--個体値-->
+                        <tr>
+                            <th>個体</th>
+                            <td>
+                                <input type="number" max="31" min="0" value="31" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" value="31" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" value="31" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" value="31" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" value="31" class="IV">
+                            </td>
+                            <td>
+                                <input type="number" max="31" min="0" value="31" class="IV">
+                            </td>
+                        </tr>
+                        <!--努力値-->
+                        <tr>
+                            <th>努力</th>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                            </td>
+                            <td>
+                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                            </td>
+                            <td>
+                                <label class="EV-total">残:508</label>
+                            </td>
+                        </tr>
+                        <!--ぶっぱボタン-->
+                        <tr>
+                            <th></th>
+                            <td>
+                                <input type="button" onclick="Mufuri2(0)" value="0">
+                                <input type="button" onclick="Buppa2(0)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri2(1)" value="0">
+                                <input type="button" onclick="Buppa2(1)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri2(2)" value="0">
+                                <input type="button" onclick="Buppa2(2)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri2(3)" value="0">
+                                <input type="button" onclick="Buppa2(3)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri2(4)" value="0">
+                                <input type="button" onclick="Buppa2(4)" value="252">
+                            </td>
+                            <td>
+                                <input type="button" onclick="Mufuri2(5)" value="0">
+                                <input type="button" onclick="Buppa2(5)" value="252">
+                            </td>
+                        </tr>
+                        <!--ランク補正-->
+                        <tr>
+                            <th>ランク</th>
+                            <td></td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option selected="selected" value="0">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option selected="selected" value="0">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option selected="selected" value="0">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option selected="selected" value="0">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="rank">
+                                    <option value="6">+6</option>
+                                    <option value="5">+5</option>
+                                    <option value="4">+4</option>
+                                    <option value="3">+3</option>
+                                    <option value="2">+2</option>
+                                    <option value="1">+1</option>
+                                    <option selected="selected" value="0">-</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                    <option value="-3">-3</option>
+                                    <option value="-4">-4</option>
+                                    <option value="-5">-5</option>
+                                    <option value="-6">-6</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <!--実数値-->
+                        <tr>
+                            <th>実数</th>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                            <td class="status"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <label for="power">いりょく </label>
+        <input type="number" id="power"> 
+        <br>
+        <label for="effect">相性補正 </label>
+        <input type="number" id="effect"> 
+        <br>
+        <label for="STAB">タイプ一致 </label>
+        <input type="checkbox" id="STAB" name="stab"> <!--SameTypeAttackBonus-->
+        <br> 
+        <input type="button" onclick="clickResultDisp()" value="計算">
+        <br>
+        <label id="result"></label>
     </body>
 </html>
