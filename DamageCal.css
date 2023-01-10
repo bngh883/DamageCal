@@ -1,6 +1,5 @@
 h1{font-size: 30px; color: black;}
 h3{color: red;}
-h4{color: blue;}
 
 input[type=radio]{
     display: none;  /* ラジオボタンを非表示にする */

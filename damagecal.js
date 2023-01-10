@@ -56,13 +56,57 @@ function SearchPokemon(pokeID){
     }else if (nature < 50) {     // S下降    
         nature_appList[5] = 0.9;
     }
+    //ランク補正取得
+    let ranks = poke.getElementsByClassName("rank");
+    let rank_appList = [1.0, 1.0, 1.0, 1.0, 1.0];
+    for (let i = 0; i < 5; i++) {
+        switch (parseInt(ranks[i].value)) {
+            case 6:
+                rank_appList[i] = 4.0;
+                break;
+            case 5:
+                rank_appList[i] = 3.5;
+                break;
+            case 4:
+                rank_appList[i] = 3.0;
+                break;
+            case 3:
+                rank_appList[i] = 2.5;
+                break;
+            case 2:
+                rank_appList[i] = 2.0;
+                break;
+            case 1:
+                rank_appList[i] = 1.5;
+                break;
+            case -1:
+                rank_appList[i] = 2/3;
+                break;
+            case -2:
+                rank_appList[i] = 0.5;
+                break;
+            case -3:
+                rank_appList[i] = 0.4;
+                break;
+            case -4:
+                rank_appList[i] = 1/3;
+                break;
+            case -5:
+                rank_appList[i] = 2/7;
+                break;
+            case -6:
+                rank_appList[i] = 0.25;
+                break;
+            default:
+                break;
+        }
+    }
 
-
-    for (let i=0; i < lines.length; ++i){
+    for (let i=0; i < lines.length; i++){
         let cells = lines[i].split(",");
 
         if(cells[0] == name){
-            for (let j=0; j<6; ++j){
+            for (let j=0; j<6; j++){
                 let stats_v = parseInt(cells[j+1]); //種族値
                 let IV_v = parseInt(IVs[j].value);  //個体値
                 let EV_v = parseInt(EVs[j].value);  //努力値
@@ -71,7 +115,8 @@ function SearchPokemon(pokeID){
                     result = parseInt(result +60);
                 }else{                              //　それ以外
                     result = parseInt(result +5);
-                    result = parseInt(result * nature_appList[j]);
+                    result = parseInt(result * nature_appList[j]);   //性格補正
+                    result = parseInt(result * rank_appList[j-1]);   //ランク補正
                 }
                 poke.getElementsByClassName("status")[j].innerHTML = result;
             }
@@ -79,7 +124,7 @@ function SearchPokemon(pokeID){
         }
     }
 }
-
+//ポケモン1用関数
 function Buppa(num){
     document.getElementById("form1").getElementsByClassName("EV")[num].value = 252;
     EVsum();
@@ -97,6 +142,7 @@ function EVsum(){
     }
     document.getElementById("form1").getElementsByClassName("EV-total")[0].innerHTML ="残:"+ String(508 - sum);
 }
+//ポケモン2用関数
 function Buppa2(num){
     document.getElementById("form2").getElementsByClassName("EV")[num].value = 252;
     EVsum2();
@@ -116,21 +162,31 @@ function EVsum2(){
 }
 
 function clickResultDisp(){
-    var atk = document.getElementById("attack").value;
-    var def = document.getElementById("defence").value;
+    var atk = document.getElementById("form1").getElementsByClassName("status")[1].innerHTML;
+    var def = document.getElementById("form2").getElementsByClassName("status")[2].innerHTML;
     var pwr = document.getElementById("power").value;
     var efc = document.getElementById("effect").value;
-    atk = parseInt(atk); def = parseInt(def); pwr = parseInt(pwr)
+    atk = parseInt(atk); def = parseInt(def); pwr = parseInt(pwr); efc = parseInt(efc);
     var result;
-    result = 22 * parseInt(pwr * atk / def);
-    result = parseInt(result /50) +2;
+    result = Math.floor(22 * pwr * atk / def);
+    result = Math.floor(result /50) +2;
     var min;
-    min = parseInt(0.85 * result);
-    if (document.getElementById("STAB").checked){
-        result = parseInt(result * 1.5);
-        min = parseInt(min * 1.5);
+    min = toInt(0.85 * result);                       //最低乱数
+    if (document.getElementById("STAB").checked){     //一致補正
+        result = toInt(result * 1.5);
+        min = toInt(min * 1.5);
     }
-    result = parseInt(result * efc);
-    min = parseInt(min * efc);
+    result = toInt(result * efc);
+    min = toInt(min * efc);
     document.getElementById("result").innerHTML = String(min) + ' ~ ' + String(result);
+}
+
+function toInt(num){      //五捨五超入
+    let a = Math.floor(num);
+    let b = a + 0.5;
+    if (num > b){
+        return a+1;
+    }else{
+        return a;
+    }
 }
