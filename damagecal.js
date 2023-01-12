@@ -8,6 +8,7 @@ function SearchPokemon(pokeID){
         document.getElementById("result").innerHTML = "致命的なエラー";
       }
     
+    //ポケモンのデータリスト取得
     let lines = req.responseText.split("\n");
 
     if (pokeID == 1) {
@@ -17,7 +18,6 @@ function SearchPokemon(pokeID){
     }
     //ポケモン名取得
     let name = poke.getElementsByClassName("poke-name")[0].value;
-
     //個体値取得
     let IVs = poke.getElementsByClassName("IV");
     //努力値取得
@@ -102,6 +102,7 @@ function SearchPokemon(pokeID){
         }
     }
 
+    //ポケモンをcsvから検索しあれば実数値計算
     for (let i=0; i < lines.length; i++){
         let cells = lines[i].split(",");
 
@@ -124,6 +125,37 @@ function SearchPokemon(pokeID){
         }
     }
 }
+function MoveSearch(){
+    let req = new XMLHttpRequest();  //HTTPでファイルを読み込む
+    req.open("GET", "./PokemonDataBase/MoveData.csv", false);    //ファイル取得
+
+    try {
+        req.send(null);
+      } catch (err) {
+        document.getElementById("result").innerHTML = "致命的なエラー";
+      }
+    
+    //わざデータリスト取得
+    let lines = req.responseText.split("\n");
+    //わざのElement取得
+    let move = document.getElementById("move");
+    //わざ名取得
+    let name = move.getElementsByClassName("move-name")[0].value;
+
+    //わざをcsvから検索しあればデータ取得
+    for (let i = 1; i < lines.length; i++) {
+        let cells = lines[i].split(",");
+        
+        if(cells[0] == name){
+            move.getElementsByClassName("move-type")[0].value = cells[1];    //分類
+            move.getElementsByClassName("category")[0].value = cells[2];    //分類
+            move.getElementsByClassName("power")[0].value = cells[3];       //いりょく
+            return;
+        }
+    }
+    
+}
+
 //ポケモン1用関数
 function Buppa(num){
     document.getElementById("form1").getElementsByClassName("EV")[num].value = 252;
@@ -142,6 +174,7 @@ function EVsum(){
     }
     document.getElementById("form1").getElementsByClassName("EV-total")[0].innerHTML ="残:"+ String(508 - sum);
 }
+
 //ポケモン2用関数
 function Buppa2(num){
     document.getElementById("form2").getElementsByClassName("EV")[num].value = 252;
@@ -161,6 +194,7 @@ function EVsum2(){
     document.getElementById("form2").getElementsByClassName("EV-total")[0].innerHTML ="残:"+ String(508 - sum);
 }
 
+//ダメージ計算関数
 function clickResultDisp(){
     var atk = document.getElementById("form1").getElementsByClassName("status")[1].innerHTML;
     var def = document.getElementById("form2").getElementsByClassName("status")[2].innerHTML;
@@ -190,3 +224,5 @@ function toInt(num){      //五捨五超入
         return a;
     }
 }
+
+

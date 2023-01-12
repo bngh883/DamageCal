@@ -9,6 +9,7 @@
     <body>
         <h1>ダメージ計算機</h1>
 
+        <!--環境-->
         <div class="environment">
             <h2>環境</h2>
             <div class="battlestyle">
@@ -489,31 +490,35 @@
         <!--わざ-->
         <form id="move" name="move">
             <h3>わざ</h3>
-            <label for="move-name">技名</label> <input type="text" class="move-name">
+            <label for="move-name">技名 <input type="text" class="move-name" oninput="MoveSearch()"></label>
             <br>
-            <select class="move-type">
-                <option value="">ノーマル</option>
-                <option value="">ほのお</option>
-                <option value="">みず</option>
-                <option value="">でんき</option>
-                <option value="">くさ</option>
-                <option value="">こおり</option>
-                <option value="">かくとう</option>
-                <option value="">どく</option>
-                <option value="">じめん</option>
-                <option value="">ひこう</option>
-                <option value="">エスパー</option>
-                <option value="">むし</option>
-                <option value="">いわ</option>
-                <option value="">ゴースト</option>
-                <option value="">ドラゴン</option>
-                <option value="">あく</option>
-                <option value="">はがね</option>
-                <option value="">フェアリー</option>
+            <select class="category">
+                <option value="1">物理</option>
+                <option value="2">特殊</option>
             </select>
             <br>
-            <label for="power">いりょく </label><input type="number" id="power"> 
-
+            <select class="move-type">
+                <option value="1">ノーマル</option>
+                <option value="2">ほのお</option>
+                <option value="3">みず</option>
+                <option value="4">でんき</option>
+                <option value="5">くさ</option>
+                <option value="6">こおり</option>
+                <option value="7">かくとう</option>
+                <option value="8">どく</option>
+                <option value="9">じめん</option>
+                <option value="10">ひこう</option>
+                <option value="11">エスパー</option>
+                <option value="12">むし</option>
+                <option value="13">いわ</option>
+                <option value="14">ゴースト</option>
+                <option value="15">ドラゴン</option>
+                <option value="16">あく</option>
+                <option value="17">はがね</option>
+                <option value="18">フェアリー</option>
+            </select>
+            <br>
+            <label for="power">いりょく <input type="number" class="power"> </label>
         </form>
         
         <br>
