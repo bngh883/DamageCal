@@ -1,219 +1,79 @@
-function SearchPokemon(pokeID){
-    let req = new XMLHttpRequest();  //HTTPでファイルを読み込む
-    req.open("GET", "./PokemonDataBase/PokemonData.csv", false);    //ファイル取得
-
-    try {
-        req.send(null);
-      } catch (err) {
-        document.getElementById("result").innerHTML = "致命的なエラー";
-      }
-    
-    //ポケモンのデータリスト取得
-    let lines = req.responseText.split("\n");
-
-    if (pokeID == 1) {
-        var poke = document.getElementById("form1"); //ポケモン1
-    }else{
-        var poke = document.getElementById("form2"); //ポケモン2
-    }
-    //ポケモン名取得
-    let name = poke.getElementsByClassName("poke-name")[0].value;
-    //個体値取得
-    let IVs = poke.getElementsByClassName("IV");
-    //努力値取得
-    let EVs = poke.getElementsByClassName("EV");
-    //性格補正取得
-    let nature = poke.getElementsByClassName("nature")[0].value;
-    let nature_appList = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
-    nature = parseInt(nature);
-    switch (nature % 10) {
-        case 1: // A上昇
-            nature_appList[1] = 1.1;
-            break;
-        case 2: // B上昇
-            nature_appList[2] = 1.1;
-            break;
-        case 3: // C上昇
-            nature_appList[3] = 1.1;
-            break;
-        case 4: // D上昇
-            nature_appList[4] = 1.1;
-            break;
-        case 5: // S上昇
-            nature_appList[5] = 1.1;
-            break;
+//ダメージ計算関数
+function clickResultDisp(num){
+    let poke1 = document.getElementById("form1");  //攻撃側ポケモン
+    let poke2 = document.getElementById("form2");  //防御側ポケモン
+    let moveid;
+    switch (num) {
+        case 1:
+            moveid = "move1";break;
+        case 2:
+            moveid = "move2";break;
+        case 3:
+            moveid = "move3";break;
         default:
             break;
     }
-    if (nature < 10) {           // A下降
-        nature_appList[1] = 0.9;
-    }else if (nature < 20) {     // B下降    
-        nature_appList[2] = 0.9;
-    }else if (nature < 30) {     // C下降    
-        nature_appList[3] = 0.9;
-    }else if (nature < 40) {     // D下降    
-        nature_appList[4] = 0.9;
-    }else if (nature < 50) {     // S下降    
-        nature_appList[5] = 0.9;
+    let move = document.getElementById(moveid);    //わざ
+    let cat = move.getElementsByClassName("category")[0].value;   //分類
+    var atk, def;
+    if (cat == "1") {       //物理技なので攻撃と防御
+        atk = poke1.getElementsByClassName("status")[1].innerHTML;
+        def = poke2.getElementsByClassName("status")[2].innerHTML;
+    }else{                  //特殊技なので特攻と特防
+        atk = poke1.getElementsByClassName("status")[3].innerHTML;
+        def = poke2.getElementsByClassName("status")[4].innerHTML;
     }
-    //ランク補正取得
-    let ranks = poke.getElementsByClassName("rank");
-    let rank_appList = [1.0, 1.0, 1.0, 1.0, 1.0];
-    for (let i = 0; i < 5; i++) {
-        switch (parseInt(ranks[i].value)) {
-            case 6:
-                rank_appList[i] = 4.0;
-                break;
-            case 5:
-                rank_appList[i] = 3.5;
-                break;
-            case 4:
-                rank_appList[i] = 3.0;
-                break;
-            case 3:
-                rank_appList[i] = 2.5;
-                break;
-            case 2:
-                rank_appList[i] = 2.0;
-                break;
-            case 1:
-                rank_appList[i] = 1.5;
-                break;
-            case -1:
-                rank_appList[i] = 2/3;
-                break;
-            case -2:
-                rank_appList[i] = 0.5;
-                break;
-            case -3:
-                rank_appList[i] = 0.4;
-                break;
-            case -4:
-                rank_appList[i] = 1/3;
-                break;
-            case -5:
-                rank_appList[i] = 2/7;
-                break;
-            case -6:
-                rank_appList[i] = 0.25;
-                break;
-            default:
-                break;
-        }
-    }
-
-    //ポケモンをcsvから検索しあれば実数値計算
-    for (let i=0; i < lines.length; i++){
-        let cells = lines[i].split(",");
-
-        if(cells[0] == name){
-            for (let j=0; j<6; j++){
-                let stats_v = parseInt(cells[j+1]); //種族値
-                let IV_v = parseInt(IVs[j].value);  //個体値
-                let EV_v = parseInt(EVs[j].value);  //努力値
-                let result = stats_v + IV_v/2 + EV_v/8;
-                if (j == 0){                        //　HP
-                    result = parseInt(result +60);
-                }else{                              //　それ以外
-                    result = parseInt(result +5);
-                    result = parseInt(result * nature_appList[j]);   //性格補正
-                    result = parseInt(result * rank_appList[j-1]);   //ランク補正
-                }
-                poke.getElementsByClassName("status")[j].innerHTML = result;
-            }
-            return;
-        }
-    }
-}
-function MoveSearch(){
-    let req = new XMLHttpRequest();  //HTTPでファイルを読み込む
-    req.open("GET", "./PokemonDataBase/MoveData.csv", false);    //ファイル取得
-
-    try {
-        req.send(null);
-      } catch (err) {
-        document.getElementById("result").innerHTML = "致命的なエラー";
-      }
-    
-    //わざデータリスト取得
-    let lines = req.responseText.split("\n");
-    //わざのElement取得
-    let move = document.getElementById("move");
-    //わざ名取得
-    let name = move.getElementsByClassName("move-name")[0].value;
-
-    //わざをcsvから検索しあればデータ取得
-    for (let i = 1; i < lines.length; i++) {
-        let cells = lines[i].split(",");
-        
-        if(cells[0] == name){
-            move.getElementsByClassName("move-type")[0].value = cells[1];    //分類
-            move.getElementsByClassName("category")[0].value = cells[2];    //分類
-            move.getElementsByClassName("power")[0].value = cells[3];       //いりょく
-            return;
-        }
-    }
-    
-}
-
-//ポケモン1用関数
-function Buppa(num){
-    document.getElementById("form1").getElementsByClassName("EV")[num].value = 252;
-    EVsum();
-}
-function Mufuri(num){
-    document.getElementById("form1").getElementsByClassName("EV")[num].value = 0;
-    EVsum();
-}
-function EVsum(){
-    let sum = 0;
-    //努力値取得
-    let EVs = document.getElementById("form1").getElementsByClassName("EV");
-    for (let i = 0; i < 6; i++) {
-        sum += parseInt(EVs[i].value);
-    }
-    document.getElementById("form1").getElementsByClassName("EV-total")[0].innerHTML ="残:"+ String(508 - sum);
-}
-
-//ポケモン2用関数
-function Buppa2(num){
-    document.getElementById("form2").getElementsByClassName("EV")[num].value = 252;
-    EVsum2();
-}
-function Mufuri2(num){
-    document.getElementById("form2").getElementsByClassName("EV")[num].value = 0;
-    EVsum2();
-}
-function EVsum2(){
-    let sum = 0;
-    //努力値取得
-    let EVs = document.getElementById("form2").getElementsByClassName("EV");
-    for (let i = 0; i < 6; i++) {
-        sum += parseInt(EVs[i].value);
-    }
-    document.getElementById("form2").getElementsByClassName("EV-total")[0].innerHTML ="残:"+ String(508 - sum);
-}
-
-//ダメージ計算関数
-function clickResultDisp(){
-    var atk = document.getElementById("form1").getElementsByClassName("status")[1].innerHTML;
-    var def = document.getElementById("form2").getElementsByClassName("status")[2].innerHTML;
-    var pwr = document.getElementById("power").value;
-    var efc = document.getElementById("effect").value;
-    atk = parseInt(atk); def = parseInt(def); pwr = parseInt(pwr); efc = parseInt(efc);
-    var result;
+    let pwr = move.getElementsByClassName("power")[0].value;  //いりょく
+    let move_type = move.getElementsByClassName("move-type");
+    let poke1_type = poke1.getElementsByClassName("poke-type");
+    let poke2_type = poke2.getElementsByClassName("poke-type");
+    //タイプ相性
+    let efc = TypeCompa(move_type[0].value, poke2_type[0].value, poke2_type[1].value);
+    atk = parseInt(atk); def = parseInt(def); pwr = parseInt(pwr);
+    let result;
     result = Math.floor(22 * pwr * atk / def);
     result = Math.floor(result /50) +2;
-    var min;
-    min = toInt(0.85 * result);                       //最低乱数
-    if (document.getElementById("STAB").checked){     //一致補正
+    let min;
+    min = Math.floor(0.85 * result);                       //最低乱数(乱数補正計算後は切り捨て)
+    //一致補正(五捨五超入)
+    if (move_type[0].value==poke1_type[0].value || move_type[0].value==poke1_type[1].value){     
         result = toInt(result * 1.5);
         min = toInt(min * 1.5);
     }
-    result = toInt(result * efc);
-    min = toInt(min * efc);
-    document.getElementById("result").innerHTML = String(min) + ' ~ ' + String(result);
+    //タイプ相性反映
+    result = Math.floor(result * efc);
+    min = Math.floor(min * efc);
+    move.getElementsByClassName("result")[0].innerHTML = String(min) + ' ~ ' + String(result);
 }
+//タイプ相性
+function TypeCompa(movetype, poketype1, poketype2) {
+    let moveid = parseInt(movetype) -1;
+    let pokeid1 = parseInt(poketype1) -1;
+    let effect = type_table[moveid][pokeid1];
+    if (poketype2 != "0") {
+        let pokeid2 = parseInt(poketype2) -1;
+        effect = effect * type_table[moveid][pokeid2];
+    }
+    return effect;
+}
+var type_table = [[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5,0,1.0, 1.0, 0.5,1.0],       //ノーマル
+                        [1.0, 0.5, 0.5, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 0.5, 1.0, 2.0, 1.0], //ほのお
+                        [1.0, 2.0, 0.5, 1.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.5, 1.0, 1.0, 1.0], //みず
+                        [1.0, 1.0, 2.0, 0.5, 0.5, 1.0, 1.0, 1.0, 0,   2.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0], //でんき
+                        [1.0, 0.5, 2.0, 1.0, 0.5, 1.0, 1.0, 0.5, 2.0, 0.5, 1.0, 0.5, 2.0, 1.0, 0.5, 1.0, 0.5, 1.0], //くさ
+                        [1.0, 0.5, 0.5, 1.0, 2.0, 0.5, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.5, 1.0], //こおり
+                        [2.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.5, 1.0, 0.5, 0.5, 0.5, 2.0, 0,   1.0, 2.0, 2.0, 0.5], //かくとう
+                        [1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5, 1.0, 1.0, 1.0, 0.5, 0.5, 1.0, 1.0, 0,   2.0], //どく
+                        [1.0, 2.0, 1.0, 2.0, 0.5, 1.0, 1.0, 2.0, 1.0, 0,   1.0, 0.5, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0], //じめん
+                        [1.0, 1.0, 1.0, 0.5, 2.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 0.5, 1.0], //ひこう
+                        [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 0,   0.5, 1.0], //エスパー
+                        [1.0, 0.5, 1.0, 1.0, 2.0, 1.0, 0.5, 0.5, 1.0, 0.5, 2.0, 1.0, 1.0, 0.5, 1.0, 2.0, 0.5, 0.5], //むし
+                        [1.0, 2.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 0.5, 2.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0], //いわ
+                        [0,   1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 0.5, 1.0, 1.0], //ゴースト
+                        [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.5, 0], //ドラゴン
+                        [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 0.5, 1.0, 0.5], //あく
+                        [1.0, 0.5, 0.5, 0.5, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 0.5, 2.0], //はがね
+                        [1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 0.5, 1.0]]; //フェアリー
 
 function toInt(num){      //五捨五超入
     let a = Math.floor(num);

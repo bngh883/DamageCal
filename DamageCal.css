@@ -1,6 +1,45 @@
 h1{font-size: 30px; color: black;}
 h3{color: red;}
 
+/*環境*/
+.environment{
+    display: flex;
+    padding: 10px;
+}
+.environment div{
+    padding: 10px;
+}
+
+/*わざ*/
+@media (min-width:520px) {
+    .moves{
+        display: flex;
+    }
+}
+.moves form{
+    background-color: rgb(182, 255, 153);
+    padding: 10px;
+    margin: 5px;
+}
+
+/*ポケモン*/
+#form1{
+    background-color: rgb(255, 197, 149);
+    padding: 10px;
+    margin: 5px;
+}
+#form2{
+    background-color: rgb(142, 246, 250);
+    padding: 10px;
+    margin: 5px;
+}
+@media (min-width:1080px) {
+    .pokemon{
+        display: flex;
+    }
+}
+
+/*環境のラジオボタン*/
 input[type=radio]{
     display: none;  /* ラジオボタンを非表示にする */
 }
@@ -20,4 +59,10 @@ input[type="radio"]:checked + label{
     text-align: center;
     margin: 0px; /*ラベル外側の余白*/
     border: 2px solid black; /*ラベルの境界線*/
+}
+
+/*フッター*/
+footer{
+    border-top: solid 1px lightgray;
+    text-align: center;
 }

@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>  <!--HTML(Hyper-Text Markup Language)-->
-    <head>  <!--ヘッダ部-->
+    <head> 
         <meta charset="UTF-8">
         <link rel="stylesheet" href="DamageCal.css" />
         <title>ポケモンダメージ計算ツール</title> <!--ここはページの名前-->
         <script src="damagecal.js"></script>
+        <script src="DataSearch.js"></script>
     </head>
     <body>
-        <h1>ダメージ計算機</h1>
-
+        <!--ヘッダー-->
+        <header>
+            <h1>ダメージ計算機</h1>
+            <ul>
+                <li>しんりょく等のツール内で指定できない条件下で発動する特性はすべて自動で有効になります。(プラス、マイナスも常に有効)</li>
+                <li>クォークチャージ、こだいかっせいは対応する環境下か持ち物がブーストエナジーでないと無効になります。</li>
+            </ul>
+        </header>
         <!--環境-->
         <div class="environment">
-            <h2>環境</h2>
+            <h2></h2>
             <div class="battlestyle">
                 <input type="radio" name="battlestyle" id="single" checked="checked"><label for="single" class="label">シングル</label>
                 <input type="radio" name="battlestyle" id="double"><label for="double" class="label">ダブル</label> 
             </div>
-            <br><br>
             <div class="weather">
                 <input type="radio" name="weather" id="normal" checked="checked"><label for="normal" class="label">通常</label>
                 <input type="radio" name="weather" id="sunny"><label for="sunny" class="label">晴</label>
@@ -24,7 +30,6 @@
                 <input type="radio" name="weather" id="sandstorm"><label for="sandstorm" class="label">砂</label>
                 <input type="radio" name="weather" id="snow"><label for="snow" class="label">雪</label>
             </div>
-            <br><br>
             <div class="field">
                 <input type="radio" name="field" id="normal2" checked="checked"><label for="normal2" class="label">通常</label>
                 <input type="radio" name="field" id="electric"><label for="electric" class="label">エレキ</label>
@@ -32,504 +37,807 @@
                 <input type="radio" name="field" id="glass"><label for="glass" class="label">グラス</label>
                 <input type="radio" name="field" id="misty"><label for="misty" class="label">ミスト</label>
             </div>
-            <br><br>
         </div>
 
-        <!--ポケモン1-->
-        <form id="form1" name="form1">
-            <h3>ポケモン1</h3>
-            <!--基本情報-->
-            <div class="row">
-                <input type="text" class="poke-name">
-                <select class="nature">
-                    <option value="21">いじっぱり A+C-</option>
-                    <option value="3">ひかえめ C+A-</option>
-                    <option value="25">ようき S+C-</option>
-                    <option value="5">おくびょう S+A-</option>
-                    <option value="2">ずぶとい B+A-</option>
-                    <option value="22">わんぱく B+C-</option>
-                    <option value="4">おだやか D+A-</option>
-                    <option value="24">しんちょう D+C-</option>
-                    <option value="41">ゆうかん A+S-</option>
-                    <option value="43">れいせい C+S-</option>
-                    <option value="42">のんき B+S-</option>
-                    <option value="44">なまいき D+S-</option>
-                    <option value="35">むじゃき S+D-</option>
-                    <option value="15">せっかち S+B-</option>
-                    <option value="11">さみしがり A+B-</option>
-                    <option value="33">おっとり C+D-</option>
-                    <option value="31">やんちゃ A+D-</option>
-                    <option value="13">うっかりや C+B-</option>
-                    <option value="100">がんばりや</option>
-                    <option value="32">のうてんき B+D-</option>
-                    <option value="14">おとなしい D+B-</option>
-                </select>
-                <input type="button" onclick="SearchPokemon(1)" value="実数値表示">
-            </div>
-            <!--数値群-->
-            <div class="row">
-                <table class="stats_table">
-                    <!--ヘッダ-->
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>HP</th>
-                            <th>攻撃</th>
-                            <th>防御</th>
-                            <th>特攻</th>
-                            <th>特防</th>
-                            <th>素早</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--個体値-->
-                        <tr>
-                            <th>個体</th>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                        </tr>
-                        <!--努力値-->
-                        <tr>
-                            <th>努力</th>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
-                            </td>
-                            <td>
-                                <label class="EV-total">残:508</label>
-                            </td>
-                        </tr>
-                        <!--ぶっぱボタン-->
-                        <tr>
-                            <th></th>
-                            <td>
-                                <input type="button" onclick="Mufuri(0)" value="0">
-                                <input type="button" onclick="Buppa(0)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri(1)" value="0">
-                                <input type="button" onclick="Buppa(1)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri(2)" value="0">
-                                <input type="button" onclick="Buppa(2)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri(3)" value="0">
-                                <input type="button" onclick="Buppa(3)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri(4)" value="0">
-                                <input type="button" onclick="Buppa(4)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri(5)" value="0">
-                                <input type="button" onclick="Buppa(5)" value="252">
-                            </td>
-                        </tr>
-                        <!--ランク補正-->
-                        <tr>
-                            <th>ランク</th>
-                            <td></td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <!--実数値-->
-                        <tr>
-                            <th>実数</th>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
-        <!--ポケモン2-->
-        <form id="form2" name="form2">
-            <h3>ポケモン2</h3>
-            <!--基本情報-->
-            <div class="row">
-                <input type="text" class="poke-name">
-                <select class="nature">
-                    <option value="21">いじっぱり A+C-</option>
-                    <option value="3">ひかえめ C+A-</option>
-                    <option value="25">ようき S+C-</option>
-                    <option value="5">おくびょう S+A-</option>
-                    <option value="2">ずぶとい B+A-</option>
-                    <option value="22">わんぱく B+C-</option>
-                    <option value="4">おだやか D+A-</option>
-                    <option value="24">しんちょう D+C-</option>
-                    <option value="41">ゆうかん A+S-</option>
-                    <option value="43">れいせい C+S-</option>
-                    <option value="42">のんき B+S-</option>
-                    <option value="44">なまいき D+S-</option>
-                    <option value="35">むじゃき S+D-</option>
-                    <option value="15">せっかち S+B-</option>
-                    <option value="11">さみしがり A+B-</option>
-                    <option value="33">おっとり C+D-</option>
-                    <option value="31">やんちゃ A+D-</option>
-                    <option value="13">うっかりや C+B-</option>
-                    <option value="100">がんばりや</option>
-                    <option value="32">のうてんき B+D-</option>
-                    <option value="14">おとなしい D+B-</option>
-                </select>
-                <input type="button" onclick="SearchPokemon(2)" value="実数値表示">
-            </div>
-            <!--数値群-->
-            <div class="row">
-                <table class="stats_table">
-                    <!--ヘッダ-->
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>HP</th>
-                            <th>攻撃</th>
-                            <th>防御</th>
-                            <th>特攻</th>
-                            <th>特防</th>
-                            <th>素早</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--個体値-->
-                        <tr>
-                            <th>個体</th>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                            <td>
-                                <input type="number" max="31" min="0" value="31" class="IV">
-                            </td>
-                        </tr>
-                        <!--努力値-->
-                        <tr>
-                            <th>努力</th>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
-                            </td>
-                            <td>
-                                <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
-                            </td>
-                            <td>
-                                <label class="EV-total">残:508</label>
-                            </td>
-                        </tr>
-                        <!--ぶっぱボタン-->
-                        <tr>
-                            <th></th>
-                            <td>
-                                <input type="button" onclick="Mufuri2(0)" value="0">
-                                <input type="button" onclick="Buppa2(0)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri2(1)" value="0">
-                                <input type="button" onclick="Buppa2(1)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri2(2)" value="0">
-                                <input type="button" onclick="Buppa2(2)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri2(3)" value="0">
-                                <input type="button" onclick="Buppa2(3)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri2(4)" value="0">
-                                <input type="button" onclick="Buppa2(4)" value="252">
-                            </td>
-                            <td>
-                                <input type="button" onclick="Mufuri2(5)" value="0">
-                                <input type="button" onclick="Buppa2(5)" value="252">
-                            </td>
-                        </tr>
-                        <!--ランク補正-->
-                        <tr>
-                            <th>ランク</th>
-                            <td></td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="rank">
-                                    <option value="6">+6</option>
-                                    <option value="5">+5</option>
-                                    <option value="4">+4</option>
-                                    <option value="3">+3</option>
-                                    <option value="2">+2</option>
-                                    <option value="1">+1</option>
-                                    <option selected="selected" value="0">-</option>
-                                    <option value="-1">-1</option>
-                                    <option value="-2">-2</option>
-                                    <option value="-3">-3</option>
-                                    <option value="-4">-4</option>
-                                    <option value="-5">-5</option>
-                                    <option value="-6">-6</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <!--実数値-->
-                        <tr>
-                            <th>実数</th>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                            <td class="status"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
+        <!--ポケモン-->
+        <div class="pokemon">
+            <!--ポケモン1-->
+            <form id="form1" name="form1" onchange="CalcStat(1)">
+                <h3>攻撃ポケモン</h3>
+                <!--基本情報-->
+                <div class="row">
+                    <input type="text" class="poke-name" oninput="SearchPokemon(1)">
+                    <select class="nature">
+                        <option value="21">いじっぱり A+C-</option>
+                        <option value="3">ひかえめ C+A-</option>
+                        <option value="25">ようき S+C-</option>
+                        <option value="5">おくびょう S+A-</option>
+                        <option value="2">ずぶとい B+A-</option>
+                        <option value="22">わんぱく B+C-</option>
+                        <option value="4">おだやか D+A-</option>
+                        <option value="24">しんちょう D+C-</option>
+                        <option value="41">ゆうかん A+S-</option>
+                        <option value="43">れいせい C+S-</option>
+                        <option value="42">のんき B+S-</option>
+                        <option value="44">なまいき D+S-</option>
+                        <option value="35">むじゃき S+D-</option>
+                        <option value="15">せっかち S+B-</option>
+                        <option value="11">さみしがり A+B-</option>
+                        <option value="33">おっとり C+D-</option>
+                        <option value="31">やんちゃ A+D-</option>
+                        <option value="13">うっかりや C+B-</option>
+                        <option value="100">がんばりや</option>
+                        <option value="32">のうてんき B+D-</option>
+                        <option value="14">おとなしい D+B-</option>
+                    </select>
+                    <select class="poke-type">
+                        <option value="1">ノーマル</option>
+                        <option value="2">ほのお</option>
+                        <option value="3">みず</option>
+                        <option value="4">でんき</option>
+                        <option value="5">くさ</option>
+                        <option value="6">こおり</option>
+                        <option value="7">かくとう</option>
+                        <option value="8">どく</option>
+                        <option value="9">じめん</option>
+                        <option value="10">ひこう</option>
+                        <option value="11">エスパー</option>
+                        <option value="12">むし</option>
+                        <option value="13">いわ</option>
+                        <option value="14">ゴースト</option>
+                        <option value="15">ドラゴン</option>
+                        <option value="16">あく</option>
+                        <option value="17">はがね</option>
+                        <option value="18">フェアリー</option>
+                    </select>
+                    <select class="poke-type">
+                        <option value="0">-</option>
+                        <option value="1">ノーマル</option>
+                        <option value="2">ほのお</option>
+                        <option value="3">みず</option>
+                        <option value="4">でんき</option>
+                        <option value="5">くさ</option>
+                        <option value="6">こおり</option>
+                        <option value="7">かくとう</option>
+                        <option value="8">どく</option>
+                        <option value="9">じめん</option>
+                        <option value="10">ひこう</option>
+                        <option value="11">エスパー</option>
+                        <option value="12">むし</option>
+                        <option value="13">いわ</option>
+                        <option value="14">ゴースト</option>
+                        <option value="15">ドラゴン</option>
+                        <option value="16">あく</option>
+                        <option value="17">はがね</option>
+                        <option value="18">フェアリー</option>
+                    </select>
+                    <br>
+                    <label for="ability">とくせい</label>
+                    <select class="ability">
+                        <option value="なし">なし</option>
+                        <option value="アナライズ">アナライズ</option>
+                        <option value="いろめがね">いろめがね</option>
+                        <option value="いわはこび">いわはこび</option>
+                        <option value="かぜのり">かぜのり</option>
+                        <option value="かたいツメ">かたいツメ</option>
+                        <option value="がんじょうあご">がんじょうあご</option>
+                        <option value="きもったま">きもったま</option>
+                        <option value="きれあじ">きれあじ</option>
+                        <option value="クォークチャージ">クォークチャージ</option>
+                        <option value="げきりゅう">げきりゅう</option>
+                        <option value="こだいかっせい">こだいかっせい</option>
+                        <option value="ごりむちゅう">ごりむちゅう</option>
+                        <option value="こんじょう">こんじょう</option>
+                        <option value="サンパワー">サンパワー</option>
+                        <option value="しんりょく">しんりょく</option>
+                        <option value="すてみ">すてみ</option>
+                        <option value="すなのちから">すなのちから</option>
+                        <option value="すりぬけ">すりぬけ</option>
+                        <option value="スナイパー">スナイパー</option>
+                        <option value="スロースタート">スロースタート</option>
+                        <option value="そうだいしょう1">そうだいしょう(1体)</option>
+                        <option value="そうだいしょう2">そうだいしょう(2体)</option>
+                        <option value="そうだいしょう3">そうだいしょう(3体)</option>
+                        <option value="ちからずく">ちからずく</option>
+                        <option value="ちからもち">ちからもち</option>
+                        <option value="テクニシャン">テクニシャン</option>
+                        <option value="てきおうりょく">てきおうりょく</option>
+                        <option value="てつのこぶし">てつのこぶし</option>
+                        <option value="とうそうしん">とうそうしん</option>
+                        <option value="どくぼうそう">どくぼうそう</option>
+                        <option value="ねつぼうそう">ねつぼうそう</option>
+                        <option value="はがねのせいしん">はがねのせいしん</option>
+                        <option value="はりきり">はりきり</option>
+                        <option value="はりこみ">はりこみ</option>
+                        <option value="パンクロック">パンクロック</option>
+                        <option value="フェアリースキン">フェアリースキン</option>
+                        <option value="プラス">プラス</option>
+                        <option value="フラワーギフト">フラワーギフト</option>
+                        <option value="マイナス">マイナス</option>
+                        <option value="むしのしらせ">むしのしらせ</option>
+                        <option value="メガランチャー">メガランチャー</option>
+                        <option value="もうか">もうか</option>
+                        <option value="もらいび">もらいび</option>
+                        <option value="ヨガパワー">ヨガパワー</option>
+                        <option value="わざわいのたま">わざわいのたま</option>
+                        <option value="わざわいのつるぎ">わざわいのつるぎ</option>
+                    </select>
+                    <label for="item">もちもの</label>
+                    <select class="item">
+                        <option value="0">なし</option>
+                        <option value="1">タイプ強化系アイテム</option>
+                        <option value="2">いのちのたま</option>
+                        <option value="3">こだわりハチマキ</option>
+                        <option value="4">こだわりメガネ</option>
+                        <option value="5">ブーストエナジー</option>
+                        <option value="6">たつじんのおび</option>
+                        <option value="7">ちからのハチマキ</option>
+                        <option value="8">ものしりメガネ</option>
+                        <option value="9">ノーマルジュエル</option>
+                    </select>
+                </div>
+                <!--数値群-->
+                <div class="row">
+                    <table class="stats_table">
+                        <!--ヘッダ-->
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>HP</th>
+                                <th>攻撃</th>
+                                <th>防御</th>
+                                <th>特攻</th>
+                                <th>特防</th>
+                                <th>素早</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--種族値-->
+                            <tr>
+                                <th>種族</th>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                            </tr>
+                            <!--個体値-->
+                            <tr>
+                                <th>個体</th>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                            </tr>
+                            <!--努力値-->
+                            <tr>
+                                <th>努力</th>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum()">
+                                </td>
+                                <td>
+                                    <label class="EV-total">残:508</label>
+                                </td>
+                            </tr>
+                            <!--ぶっぱボタン-->
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="button" onclick="Mufuri(0);CalcStat(1);" value="0">
+                                    <input type="button" onclick="Buppa(0);CalcStat(1);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri(1);CalcStat(1);" value="0">
+                                    <input type="button" onclick="Buppa(1);CalcStat(1);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri(2);CalcStat(1);" value="0">
+                                    <input type="button" onclick="Buppa(2);CalcStat(1);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri(3);CalcStat(1);" value="0">
+                                    <input type="button" onclick="Buppa(3);CalcStat(1);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri(4);CalcStat(1);" value="0">
+                                    <input type="button" onclick="Buppa(4);CalcStat(1);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri(5);CalcStat(1);" value="0">
+                                    <input type="button" onclick="Buppa(5);CalcStat(1);" value="252">
+                                </td>
+                            </tr>
+                            <!--ランク補正-->
+                            <tr>
+                                <th>ランク</th>
+                                <td></td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!--実数値-->
+                            <tr>
+                                <th>実数</th>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--その他の環境-->
+                <div class="options">
+                    <label for="HelpingHand">
+                        <input type="checkbox" id="HelpingHand">
+                        てだすけ
+                    </label>
+                    <label for="SteelySpirit">
+                        <input type="checkbox" id="SteelySpirit">
+                        はがねのせいしん
+                    </label>
+                    <label for="Charge">
+                        <input type="checkbox" id="Charge">
+                        じゅうでん
+                    </label>
+                </div>
+            </form>
+            <!--ポケモン2-->
+            <form id="form2" name="form2" onchange="CalcStat(2)">
+                <h3>防御ポケモン</h3>
+                <!--基本情報-->
+                <div class="row">
+                    <input type="text" class="poke-name" oninput="SearchPokemon(2)">
+                    <select class="nature">
+                        <option value="21">いじっぱり A+C-</option>
+                        <option value="3">ひかえめ C+A-</option>
+                        <option value="25">ようき S+C-</option>
+                        <option value="5">おくびょう S+A-</option>
+                        <option value="2">ずぶとい B+A-</option>
+                        <option value="22">わんぱく B+C-</option>
+                        <option value="4">おだやか D+A-</option>
+                        <option value="24">しんちょう D+C-</option>
+                        <option value="41">ゆうかん A+S-</option>
+                        <option value="43">れいせい C+S-</option>
+                        <option value="42">のんき B+S-</option>
+                        <option value="44">なまいき D+S-</option>
+                        <option value="35">むじゃき S+D-</option>
+                        <option value="15">せっかち S+B-</option>
+                        <option value="11">さみしがり A+B-</option>
+                        <option value="33">おっとり C+D-</option>
+                        <option value="31">やんちゃ A+D-</option>
+                        <option value="13">うっかりや C+B-</option>
+                        <option value="100">がんばりや</option>
+                        <option value="32">のうてんき B+D-</option>
+                        <option value="14">おとなしい D+B-</option>
+                    </select>
+                    <select class="poke-type">
+                        <option value="1">ノーマル</option>
+                        <option value="2">ほのお</option>
+                        <option value="3">みず</option>
+                        <option value="4">でんき</option>
+                        <option value="5">くさ</option>
+                        <option value="6">こおり</option>
+                        <option value="7">かくとう</option>
+                        <option value="8">どく</option>
+                        <option value="9">じめん</option>
+                        <option value="10">ひこう</option>
+                        <option value="11">エスパー</option>
+                        <option value="12">むし</option>
+                        <option value="13">いわ</option>
+                        <option value="14">ゴースト</option>
+                        <option value="15">ドラゴン</option>
+                        <option value="16">あく</option>
+                        <option value="17">はがね</option>
+                        <option value="18">フェアリー</option>
+                    </select>
+                    <select class="poke-type">
+                        <option value="0">-</option>
+                        <option value="1">ノーマル</option>
+                        <option value="2">ほのお</option>
+                        <option value="3">みず</option>
+                        <option value="4">でんき</option>
+                        <option value="5">くさ</option>
+                        <option value="6">こおり</option>
+                        <option value="7">かくとう</option>
+                        <option value="8">どく</option>
+                        <option value="9">じめん</option>
+                        <option value="10">ひこう</option>
+                        <option value="11">エスパー</option>
+                        <option value="12">むし</option>
+                        <option value="13">いわ</option>
+                        <option value="14">ゴースト</option>
+                        <option value="15">ドラゴン</option>
+                        <option value="16">あく</option>
+                        <option value="17">はがね</option>
+                        <option value="18">フェアリー</option>
+                    </select>
+                    <br>
+                    <label for="ability">とくせい</label>
+                    <select class="ability">
+                        <option value="なし">なし</option>
+                        <option value="あついしぼう">あついしぼう</option>
+                        <option value="かんそうはだ">かんそうはだ</option>
+                        <option value="きよめのしお">きよめのしお</option>
+                        <option value="くさのけがわ">くさのけがわ</option>
+                        <option value="こおりのりんぷん">こおりのりんぷん</option>
+                        <option value="こだいかっせい">こだいかっせい</option>
+                        <option value="たいねつ">たいねつ</option>
+                        <option value="ハードロック">ハードロック</option>
+                        <option value="ファーコート">ファーコート</option>
+                        <option value="フィルター">フィルター</option>
+                        <option value="ふしぎなうろこ">ふしぎなうろこ</option>
+                        <option value="ふゆう">ふゆう</option>
+                        <option value="マルチスケイル">マルチスケイル</option>
+                        <option value="もふもふ">もふもふ</option>
+                        <option value="わざわいのうつわ">わざわいのうつわ</option>
+                        <option value="わざわいのおふだ">わざわいのおふだ</option>
+                    </select>
+                    <label for="item">もちもの</label>
+                    <select class="item">
+                        <option value="0">なし</option>
+                        <option value="1">タイプ半減系きのみ</option>
+                        <option value="2">とつげきチョッキ</option>
+                        <option value="3">ブーストエナジー</option>
+                    </select>
+                </div>
+                <!--数値群-->
+                <div class="row">
+                    <table class="stats_table">
+                        <!--ヘッダ-->
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>HP</th>
+                                <th>攻撃</th>
+                                <th>防御</th>
+                                <th>特攻</th>
+                                <th>特防</th>
+                                <th>素早</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--種族値-->
+                            <tr>
+                                <th>種族</th>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                                <td class="base"></td>
+                            </tr>
+                            <!--個体値-->
+                            <tr>
+                                <th>個体</th>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                                <td>
+                                    <input type="number" max="31" min="0" value="31" class="IV">
+                                </td>
+                            </tr>
+                            <!--努力値-->
+                            <tr>
+                                <th>努力</th>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                                </td>
+                                <td>
+                                    <input type="number" max="252" min="0" step="4" value="0" class="EV" onchange="EVsum2()">
+                                </td>
+                                <td>
+                                    <label class="EV-total">残:508</label>
+                                </td>
+                            </tr>
+                            <!--ぶっぱボタン-->
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="button" onclick="Mufuri2(0);CalcStat(2);" value="0">
+                                    <input type="button" onclick="Buppa2(0);CalcStat(2);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri2(1);CalcStat(2);" value="0">
+                                    <input type="button" onclick="Buppa2(1);CalcStat(2);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri2(2);CalcStat(2);" value="0">
+                                    <input type="button" onclick="Buppa2(2);CalcStat(2);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri2(3);CalcStat(2);" value="0">
+                                    <input type="button" onclick="Buppa2(3);CalcStat(2);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri2(4);CalcStat(2);" value="0">
+                                    <input type="button" onclick="Buppa2(4);CalcStat(2);" value="252">
+                                </td>
+                                <td>
+                                    <input type="button" onclick="Mufuri2(5);CalcStat(2);" value="0">
+                                    <input type="button" onclick="Buppa2(5);CalcStat(2);" value="252">
+                                </td>
+                            </tr>
+                            <!--ランク補正-->
+                            <tr>
+                                <th>ランク</th>
+                                <td></td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="rank">
+                                        <option value="6">+6</option>
+                                        <option value="5">+5</option>
+                                        <option value="4">+4</option>
+                                        <option value="3">+3</option>
+                                        <option value="2">+2</option>
+                                        <option value="1">+1</option>
+                                        <option selected="selected" value="0">-</option>
+                                        <option value="-1">-1</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-6">-6</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!--実数値-->
+                            <tr>
+                                <th>実数</th>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                                <td class="status"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--その他の環境-->
+                <div class="options">
+                    <label for="Reflect">
+                        <input type="checkbox" id="Reflect">
+                        リフレクター
+                    </label>
+                    <label for="LightScreen">
+                        <input type="checkbox" id="LightScreen">
+                        ひかりのかべ
+                    </label>
+                    <label for="FriendGuard">
+                        <input type="checkbox" id="FriendGuard">
+                        フレンドガード
+                    </label>
+                    <label for="SmackDown">
+                        <input type="checkbox" id="SmackDown">
+                        うちおとす
+                    </label>
+                </div>
+            </form>
+        </div>
         <!--わざ-->
-        <form id="move" name="move">
-            <h3>わざ</h3>
-            <label for="move-name">技名 <input type="text" class="move-name" oninput="MoveSearch()"></label>
-            <br>
-            <select class="category">
-                <option value="1">物理</option>
-                <option value="2">特殊</option>
-            </select>
-            <br>
-            <select class="move-type">
-                <option value="1">ノーマル</option>
-                <option value="2">ほのお</option>
-                <option value="3">みず</option>
-                <option value="4">でんき</option>
-                <option value="5">くさ</option>
-                <option value="6">こおり</option>
-                <option value="7">かくとう</option>
-                <option value="8">どく</option>
-                <option value="9">じめん</option>
-                <option value="10">ひこう</option>
-                <option value="11">エスパー</option>
-                <option value="12">むし</option>
-                <option value="13">いわ</option>
-                <option value="14">ゴースト</option>
-                <option value="15">ドラゴン</option>
-                <option value="16">あく</option>
-                <option value="17">はがね</option>
-                <option value="18">フェアリー</option>
-            </select>
-            <br>
-            <label for="power">いりょく <input type="number" class="power"> </label>
-        </form>
-        
-        <br>
-        <label for="effect">相性補正 </label>
-        <input type="number" id="effect"> 
-        <br>
-        <label for="STAB">タイプ一致 </label>
-        <input type="checkbox" id="STAB" name="stab"> <!--SameTypeAttackBonus-->
-        <br> 
-        <input type="button" onclick="clickResultDisp()" value="計算">
-        <br>
-        <label id="result"></label>
+        <div class="moves">
+            <!--わざ1-->
+            <form id="move1" name="move1">
+                <h3>わざ1</h3>
+                <label for="move-name">技名 <input type="text" class="move-name" oninput="MoveSearch(1)"></label>
+                <br>
+                <select class="category">
+                    <option value="1">物理</option>
+                    <option value="2">特殊</option>
+                </select>
+                <br>
+                <select class="move-type">
+                    <option value="1">ノーマル</option>
+                    <option value="2">ほのお</option>
+                    <option value="3">みず</option>
+                    <option value="4">でんき</option>
+                    <option value="5">くさ</option>
+                    <option value="6">こおり</option>
+                    <option value="7">かくとう</option>
+                    <option value="8">どく</option>
+                    <option value="9">じめん</option>
+                    <option value="10">ひこう</option>
+                    <option value="11">エスパー</option>
+                    <option value="12">むし</option>
+                    <option value="13">いわ</option>
+                    <option value="14">ゴースト</option>
+                    <option value="15">ドラゴン</option>
+                    <option value="16">あく</option>
+                    <option value="17">はがね</option>
+                    <option value="18">フェアリー</option>
+                </select>
+                <br>
+                <label for="power">いりょく <input type="number" class="power"> </label>
+                <br>
+                <input type="button" onclick="clickResultDisp(1)" value="計算">
+                <br>
+                <label class="result">ここに計算結果</label>
+            </form>
+            <!--わざ2-->
+            <form id="move2" name="move2">
+                <h3>わざ2</h3>
+                <label for="move-name">技名 <input type="text" class="move-name" oninput="MoveSearch(2)"></label>
+                <br>
+                <select class="category">
+                    <option value="1">物理</option>
+                    <option value="2">特殊</option>
+                </select>
+                <br>
+                <select class="move-type">
+                    <option value="1">ノーマル</option>
+                    <option value="2">ほのお</option>
+                    <option value="3">みず</option>
+                    <option value="4">でんき</option>
+                    <option value="5">くさ</option>
+                    <option value="6">こおり</option>
+                    <option value="7">かくとう</option>
+                    <option value="8">どく</option>
+                    <option value="9">じめん</option>
+                    <option value="10">ひこう</option>
+                    <option value="11">エスパー</option>
+                    <option value="12">むし</option>
+                    <option value="13">いわ</option>
+                    <option value="14">ゴースト</option>
+                    <option value="15">ドラゴン</option>
+                    <option value="16">あく</option>
+                    <option value="17">はがね</option>
+                    <option value="18">フェアリー</option>
+                </select>
+                <br>
+                <label for="power">いりょく <input type="number" class="power"> </label>
+                <br>
+                <input type="button" onclick="clickResultDisp(2)" value="計算">
+                <br>
+                <label class="result">ここに計算結果</label>
+            </form>
+            <!--わざ3-->
+            <form id="move3" name="move3">
+                <h3>わざ3</h3>
+                <label for="move-name">技名 <input type="text" class="move-name" oninput="MoveSearch(3)"></label>
+                <br>
+                <select class="category">
+                    <option value="1">物理</option>
+                    <option value="2">特殊</option>
+                </select>
+                <br>
+                <select class="move-type">
+                    <option value="1">ノーマル</option>
+                    <option value="2">ほのお</option>
+                    <option value="3">みず</option>
+                    <option value="4">でんき</option>
+                    <option value="5">くさ</option>
+                    <option value="6">こおり</option>
+                    <option value="7">かくとう</option>
+                    <option value="8">どく</option>
+                    <option value="9">じめん</option>
+                    <option value="10">ひこう</option>
+                    <option value="11">エスパー</option>
+                    <option value="12">むし</option>
+                    <option value="13">いわ</option>
+                    <option value="14">ゴースト</option>
+                    <option value="15">ドラゴン</option>
+                    <option value="16">あく</option>
+                    <option value="17">はがね</option>
+                    <option value="18">フェアリー</option>
+                </select>
+                <br>
+                <label for="power">いりょく <input type="number" class="power"> </label>
+                <br>
+                <input type="button" onclick="clickResultDisp(3)" value="計算">
+                <br>
+                <label class="result">ここに計算結果</label>
+            </form>
+        </div>
+        <!--フッター-->
+        <footer>
+            <a>created by ぼんじは</a> |
+            <a href="https://twitter.com/bngh_hys">Twitter</a>
+        </footer>
     </body>
 </html>
