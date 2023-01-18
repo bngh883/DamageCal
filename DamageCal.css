@@ -9,6 +9,9 @@ h3{color: red;}
 .environment div{
     padding: 10px;
 }
+.environment form{
+    margin: 10px;
+}
 
 /*わざ*/
 @media (min-width:520px) {

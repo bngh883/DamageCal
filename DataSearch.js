@@ -161,28 +161,43 @@ function MoveSearch(num){
     let lines = req.responseText.split("\n");
     //わざのElement取得
     let moveid;
+    //わざの隠しパラメータ
+    let parameter;
     switch (num) {
         case 1:
-            moveid = "move1";break;
+            moveid = "move1";
+            parameter = document.move1.parameter;
+            break;
         case 2:
-            moveid = "move2";break;
+            moveid = "move2";
+            parameter = document.move2.parameter;
+            break;
         case 3:
-            moveid = "move3";break;
+            moveid = "move3";
+            parameter = document.move3.parameter;
+            break;
         default:
             break;
     }
     let move = document.getElementById(moveid);    //わざ
     //わざ名取得
     let name = move.getElementsByClassName("move-name")[0].value;
-
+    
     //わざをcsvから検索しあればデータ取得
     for (let i = 1; i < lines.length; i++) {
         let cells = lines[i].split(",");
         
         if(cells[0] == name){
-            move.getElementsByClassName("move-type")[0].value = cells[1];    //分類
+            move.getElementsByClassName("move-type")[0].value = cells[1];    //タイプ
             move.getElementsByClassName("category")[0].value = cells[2];    //分類
             move.getElementsByClassName("power")[0].value = cells[3];       //いりょく
+            parameter[0].value = cells[5]; //直接
+            parameter[1].value = cells[8]; //音技
+            parameter[2].value = cells[9]; //パンチ
+            parameter[3].value = cells[10]; //すてみ
+            parameter[4].value = cells[11]; //かみつき
+            parameter[5].value = cells[12]; //斬撃
+            parameter[6].value = cells[13]; //波動
             return;
         }
     }

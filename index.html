@@ -18,25 +18,24 @@
         </header>
         <!--環境-->
         <div class="environment">
-            <h2></h2>
-            <div class="battlestyle">
-                <input type="radio" name="battlestyle" id="single" checked="checked"><label for="single" class="label">シングル</label>
-                <input type="radio" name="battlestyle" id="double"><label for="double" class="label">ダブル</label> 
-            </div>
-            <div class="weather">
-                <input type="radio" name="weather" id="normal" checked="checked"><label for="normal" class="label">通常</label>
-                <input type="radio" name="weather" id="sunny"><label for="sunny" class="label">晴</label>
-                <input type="radio" name="weather" id="rain"><label for="rain" class="label">雨</label>
-                <input type="radio" name="weather" id="sandstorm"><label for="sandstorm" class="label">砂</label>
-                <input type="radio" name="weather" id="snow"><label for="snow" class="label">雪</label>
-            </div>
-            <div class="field">
-                <input type="radio" name="field" id="normal2" checked="checked"><label for="normal2" class="label">通常</label>
-                <input type="radio" name="field" id="electric"><label for="electric" class="label">エレキ</label>
-                <input type="radio" name="field" id="psychic"><label for="psychic" class="label">サイコ</label>
-                <input type="radio" name="field" id="glass"><label for="glass" class="label">グラス</label>
-                <input type="radio" name="field" id="misty"><label for="misty" class="label">ミスト</label>
-            </div>
+            <form id="battlestyle">
+                <input type="radio" name="battlestyle" value="single" id="single" checked="checked"><label for="single" class="label">シングル</label>
+                <input type="radio" name="battlestyle" value="double" id="double"><label for="double" class="label">ダブル</label> 
+            </form>
+            <form id="weather">
+                <input type="radio" name="weather" value="normal" id="normal" checked="checked"><label for="normal" class="label">通常</label>
+                <input type="radio" name="weather" value="sunny" id="sunny"><label for="sunny" class="label">晴</label>
+                <input type="radio" name="weather" value="rain" id="rain"><label for="rain" class="label">雨</label>
+                <input type="radio" name="weather" value="sandstorm" id="sandstorm"><label for="sandstorm" class="label">砂</label>
+                <input type="radio" name="weather" value="snow" id="snow"><label for="snow" class="label">雪</label>
+            </form>
+            <form id="field">
+                <input type="radio" name="field" value="normal2" id="normal2" checked="checked"><label for="normal2" class="label">通常</label>
+                <input type="radio" name="field" value="electric" id="electric"><label for="electric" class="label">エレキ</label>
+                <input type="radio" name="field" value="psychic" id="psychic"><label for="psychic" class="label">サイコ</label>
+                <input type="radio" name="field" value="glass" id="glass"><label for="glass" class="label">グラス</label>
+                <input type="radio" name="field" value="misty" id="misty"><label for="misty" class="label">ミスト</label>
+            </form>
         </div>
 
         <!--ポケモン-->
@@ -118,11 +117,9 @@
                         <option value="アナライズ">アナライズ</option>
                         <option value="いろめがね">いろめがね</option>
                         <option value="いわはこび">いわはこび</option>
-                        <option value="かぜのり">かぜのり</option>
                         <option value="かたいツメ">かたいツメ</option>
                         <option value="がんじょうあご">がんじょうあご</option>
                         <option value="きもったま">きもったま</option>
-                        <option value="きれあじ">きれあじ</option>
                         <option value="クォークチャージ">クォークチャージ</option>
                         <option value="げきりゅう">げきりゅう</option>
                         <option value="こだいかっせい">こだいかっせい</option>
@@ -132,18 +129,16 @@
                         <option value="しんりょく">しんりょく</option>
                         <option value="すてみ">すてみ</option>
                         <option value="すなのちから">すなのちから</option>
-                        <option value="すりぬけ">すりぬけ</option>
-                        <option value="スナイパー">スナイパー</option>
                         <option value="スロースタート">スロースタート</option>
                         <option value="そうだいしょう1">そうだいしょう(1体)</option>
                         <option value="そうだいしょう2">そうだいしょう(2体)</option>
                         <option value="そうだいしょう3">そうだいしょう(3体)</option>
-                        <option value="ちからずく">ちからずく</option>
                         <option value="ちからもち">ちからもち</option>
                         <option value="テクニシャン">テクニシャン</option>
                         <option value="てきおうりょく">てきおうりょく</option>
                         <option value="てつのこぶし">てつのこぶし</option>
-                        <option value="とうそうしん">とうそうしん</option>
+                        <option value="とうそうしん1">とうそうしん(x1.25)</option>
+                        <option value="とうそうしん2">とうそうしん(x0.75)</option>
                         <option value="どくぼうそう">どくぼうそう</option>
                         <option value="ねつぼうそう">ねつぼうそう</option>
                         <option value="はがねのせいしん">はがねのせいしん</option>
@@ -393,6 +388,10 @@
                     <label for="Charge">
                         <input type="checkbox" id="Charge">
                         じゅうでん
+                    </label>
+                    <label for="PowerSpot">
+                        <input type="checkbox" id="PowerSpot">
+                        パワースポット
                     </label>
                 </div>
             </form>
@@ -753,11 +752,19 @@
                     <option value="18">フェアリー</option>
                 </select>
                 <br>
-                <label for="power">いりょく <input type="number" class="power"> </label>
+                <label for="power">いりょく <input type="number" class="power" step="5"> </label>
                 <br>
                 <input type="button" onclick="clickResultDisp(1)" value="計算">
                 <br>
                 <label class="result">ここに計算結果</label>
+                <!--隠しパラメータ-->
+                <input type="hidden" name="parameter" value="0"><!--直接-->
+                <input type="hidden" name="parameter" value="0"><!--音技-->
+                <input type="hidden" name="parameter" value="0"><!--パンチ-->
+                <input type="hidden" name="parameter" value="0"><!--捨て身-->
+                <input type="hidden" name="parameter" value="0"><!--かみつき-->
+                <input type="hidden" name="parameter" value="0"><!--斬撃-->
+                <input type="hidden" name="parameter" value="0"><!--波動-->
             </form>
             <!--わざ2-->
             <form id="move2" name="move2">
@@ -790,11 +797,19 @@
                     <option value="18">フェアリー</option>
                 </select>
                 <br>
-                <label for="power">いりょく <input type="number" class="power"> </label>
+                <label for="power">いりょく <input type="number" class="power" step="5"> </label>
                 <br>
                 <input type="button" onclick="clickResultDisp(2)" value="計算">
                 <br>
                 <label class="result">ここに計算結果</label>
+                <!--隠しパラメータ-->
+                <input type="hidden" name="parameter" value="0"><!--直接-->
+                <input type="hidden" name="parameter" value="0"><!--音技-->
+                <input type="hidden" name="parameter" value="0"><!--パンチ-->
+                <input type="hidden" name="parameter" value="0"><!--捨て身-->
+                <input type="hidden" name="parameter" value="0"><!--かみつき-->
+                <input type="hidden" name="parameter" value="0"><!--斬撃-->
+                <input type="hidden" name="parameter" value="0"><!--波動-->
             </form>
             <!--わざ3-->
             <form id="move3" name="move3">
@@ -827,11 +842,19 @@
                     <option value="18">フェアリー</option>
                 </select>
                 <br>
-                <label for="power">いりょく <input type="number" class="power"> </label>
+                <label for="power">いりょく <input type="number" class="power" step="5"> </label>
                 <br>
                 <input type="button" onclick="clickResultDisp(3)" value="計算">
                 <br>
                 <label class="result">ここに計算結果</label>
+                <!--隠しパラメータ-->
+                <input type="hidden" name="parameter" value="0"><!--直接-->
+                <input type="hidden" name="parameter" value="0"><!--音技-->
+                <input type="hidden" name="parameter" value="0"><!--パンチ-->
+                <input type="hidden" name="parameter" value="0"><!--捨て身-->
+                <input type="hidden" name="parameter" value="0"><!--かみつき-->
+                <input type="hidden" name="parameter" value="0"><!--斬撃-->
+                <input type="hidden" name="parameter" value="0"><!--波動-->
             </form>
         </div>
         <!--フッター-->
