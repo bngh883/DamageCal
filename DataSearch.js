@@ -198,6 +198,7 @@ function MoveSearch(num){
             parameter[4].value = cells[11]; //かみつき
             parameter[5].value = cells[12]; //斬撃
             parameter[6].value = cells[13]; //波動
+            parameter[7].value = cells[7];
             return;
         }
     }

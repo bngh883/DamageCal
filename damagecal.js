@@ -42,15 +42,46 @@ function clickResultDisp(num){
     if (move_type[0].value==poke1_type[0].value || move_type[0].value==poke1_type[1].value){     
         stab = 1.5;
     }
+    let landed = 1;                         //接地しているか
+    if (poke1_type[0].value == "10" || poke1_type[1].value == "10") {
+        landed = 0;
+    }
     //タイプ相性
     let efc = TypeCompa(move_type[0].value, poke2_type[0].value, poke2_type[1].value);
+    //うちおとす状態
+    if (document.getElementById("SmackDown").checked) {
+        landed = 1;
+        if (move_type[0].value == "9"){    // わざがじめんタイプ
+            if (poke2_type[0].value == "10") {                 //防御側が飛行タイプ
+                efc = TypeCompa("9", poke1_type[1].value, "0");
+            }else if (poke2_type[0].value =="10"){
+                efc = TypeCompa("9", poke1_type[0].value, "0");
+            }
+        }
+    }
+    
     //基礎威力
     let pwr = move.getElementsByClassName("power")[0].value;  
     pwr = parseInt(pwr);
     
-    //威力補正値
-    let pwr_cor = 4096;
-    //はりきりの都合上持ち物補正は上にしておきたい
+    let M = 4096;             //例外補正値 M
+    let pwr_cor = 4096;       //威力補正値
+    let atk_cor = 4096;       //攻撃補正値
+    let def_cor = 4096;       //防御補正値
+
+    //壁補正
+    if ((document.getElementById("Reflect").checked && cat == "1") || 
+               (document.getElementById("LightScreen").checked && cat == "2" )) {
+        if (document.getElementById("battlestyle").battlestyle.value == "single") {
+            M = Math.round(M / 2);
+        }else{
+            M = Math.round(M * 2732 / 4096);
+        }
+    }
+    //パワースポット補正
+    if (document.getElementById("PowerSpot").checked) {
+        pwr_cor = Math.round(pwr_cor * 5325 / 4096);
+    }
     //攻撃側特性による補正
     switch (poke1.getElementsByClassName("ability")[0].value) {
         case "なし":
@@ -59,9 +90,14 @@ function clickResultDisp(num){
         case "そうだいしょう3":
             pwr_cor = Math.round(pwr_cor * 5325 / 4096);
             break;
+        case "いろめがね":
+            if (efc < 0.6) {
+                M = Math.round(M * 2);
+            }
+            break;
         case "いわはこび":
             if (move_type[0].value == "13") {
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "かたいツメ":
@@ -75,7 +111,13 @@ function clickResultDisp(num){
             }
             break;
         case "きもったま":
-            type_table[0][13] = 1.0;
+            if (move_type[0].value == "1") {        //わざがノーマル
+                if (poke2_type[0].value == "14") {  //タイプ1がゴースト
+                    efc = TypeCompa("1", "1", poke2_type[1].value);     //ゴーストの部分をノーマルに置き換えて計算
+                }else if (poke2_type[1].value == "14") { //タイプ2がゴースト
+                    efc = TypeCompa("1", poke2_type[0].value, "0");     //単タイプとして計算
+                }
+            }
             break;
         case "きれあじ":
             if (move_parameter[5].value == "1") {
@@ -93,13 +135,13 @@ function clickResultDisp(num){
                     }
                 }
                 if ((cat=="1" && n==1) || (cat=="2" && n==3)) {
-                    atk = Math.round(atk * 1.3);
+                    atk_cor = Math.round(atk_cor * 5325 / 4096);
                 }
             }
             break;
         case "げきりゅう":
             if (move_type[0].value == "3") {
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "こだいかっせい":
@@ -113,25 +155,29 @@ function clickResultDisp(num){
                     }
                 }
                 if ((cat=="1" && n==1) || (cat=="2" && n==3)) {
-                    atk = Math.round(atk * 1.3);
+                    atk_cor = Math.round(atk_cor * 5325 / 4096);
                 }
             }
             break;
         case "ごりむちゅう":
         case "こんじょう":
+            if (cat == "1") {
+                atk = Math.round(atk * 6144 / 4096); 
+            }
+            break;
         case "はりきり":
             if (cat == "1") {
-                atk = Math.floor(atk * 1.5); //はりきりは切り捨て
+                atk = Math.floor(atk * 1.5); //はりきりは切り捨て、攻撃に先にかける
             }
             break;
         case "サンパワー":
             if (document.getElementById("weather").weather.value == "sunny" && cat == "2"){
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "しんりょく":
             if (move_type[0].value == "5") {
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "すてみ":
@@ -148,7 +194,7 @@ function clickResultDisp(num){
             break;
         case "スロースタート":
             if (cat == "1") {
-                atk = Math.round(atk / 2);
+                atk_cor = Math.round(atk_cor * 2048 / 4096);
             }
             break;
         case "そうだいしょう1":
@@ -160,13 +206,14 @@ function clickResultDisp(num){
         case "ちからもち":
         case "ヨガパワー":
             if (cat == "1") {
-                atk = atk * 2;
+                atk_cor = Math.round(atk_cor * 2);
             }
             break;
         case "てきおうりょく":
             if (stab == 1.5) {
                 stab = 2.0;
             }
+            break;
         case "テクニシャン":
             if (pwr < 61) {
                 pwr_cor = Math.round(pwr_cor * 6144 / 4096);
@@ -199,7 +246,7 @@ function clickResultDisp(num){
             }
             break;
         case "はりこみ":
-            atk = atk * 2;
+            atk_cor = Math.round(atk_cor * 2);
             break;
         case "パンクロック":
             if (move_parameter[1].value == "1") {
@@ -218,17 +265,17 @@ function clickResultDisp(num){
         case "プラス":
         case "マイナス":
             if (cat == "2") {
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 /4096);
             }
             break;
         case "フラワーギフト":
             if (document.getElementById("weather").weather.value == "sunny" && cat == "1"){
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "むしのしらせ":
             if (move_type[0].value == "12") {
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "メガランチャー":
@@ -239,37 +286,238 @@ function clickResultDisp(num){
         case "もうか":
         case "もらいび":
             if (move_type[0].value == "2") {
-                atk = Math.round(atk * 1.5);
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
             }
             break;
         case "わざわいのたま":
             if (cat == "2") {
-                def = Math.round(def * 0.75);
+                def_cor = Math.round(def_cor * 3072 / 4096);
             }
             break;
         case "わざわいのつるぎ":
             if (cat == "1") {
-                def = Math.round(def * 0.75);
+                def_cor = Math.round(def_cor * 3072 / 4096);
             }
             break;
         default:
             break;
     }
+    //味方によるはがねのせいしん補正
+    if (document.getElementById("SteelySpirit").checked && move_type[0].value =="17") {
+        pwr_cor = Math.round(pwr_cor * 6144 / 4096);
+    }
+    //防御側特性による補正
+    switch (poke2.getElementsByClassName("ability")[0].value) {
+        case "なし":
+            break;
+        case "あついしぼう":
+            if (move_type[0].value == "2" || move_type[0].value == "6") {
+                atk_cor = Math.round(atk_cor * 2048/ 4096);
+            }
+            break;
+        case "かんそうはだ":
+            if (move_type[0].value == "2") {
+                pwr_cor = Math.round(pwr_cor * 5120 / 4096);
+            }else if (move_type[0].value == "3"){
+                efc = 0;
+            }
+            break;
+        case "きよめのしお":
+            if (move_type[0].value == "14") {
+                atk_cor = Math.round(atk_cor * 2048 / 4096);
+            }
+            break;
+        case "くさのけがわ":
+            if (document.getElementById("field").field.value == "glass" && cat == "1") {
+                def_cor = Math.round(def_cor * 1.5);
+            }
+            break;
+        case "クォークチャージ":
+            if (poke2.getElementsByClassName("item")[0].value == "3" || document.getElementById("field").field.value == "electric"){
+                let max_value = 0; let n;
+                for (let i = 1; i < 6; i++) {
+                    let value = parseInt(poke1.getElementsByClassName("status")[i].innerHTML);
+                    if (max_value < value) {
+                        max_value = value;            //最も大きい値とそれがなんなのか
+                        n = i;
+                    }
+                }
+                if ((cat=="1" && n==2) || (cat=="2" && n==4)) {
+                    def_cor = Math.round(def_cor * 5325 / 4096);
+                }
+            }
+            break;
+        case "こおりのりんぷん":
+            if (cat == "2") {
+                M = Math.round(M * 2048 / 4096);
+            }
+            break;
+        case "こだいかっせい":
+            if (poke2.getElementsByClassName("item")[0].value == "3" || document.getElementById("weather").weather.value == "sunny"){
+                let max_value = 0; let n;
+                for (let i = 1; i < 6; i++) {
+                    let value = parseInt(poke1.getElementsByClassName("status")[i].innerHTML);
+                    if (max_value < value) {
+                        max_value = value;            //最も大きい値とそれがなんなのか
+                        n = i;
+                    }
+                }
+                if ((cat=="1" && n==2) || (cat=="2" && n==4)) {
+                    def_cor = Math.round(def_cor * 5325 / 4096);
+                }
+            }
+            break;
+        case "たいねつ":
+            if (move_type[0].value == "2") {
+                pwr_cor = Math.round(pwr_cor * 2048 / 4096);
+            }
+            break;
+        case "ハードロック":
+        case "フィルター":
+            if (efc > 1.9) {
+                M = Math.round(M * 3072 / 4096);
+            }
+            break;
+        case "ファーコート":
+            if (cat == "1") {
+                def_cor = Math.round(def_cor * 2);
+            }
+            break;
+        case "ふしぎなうろこ":
+            if (cat == "1") {
+                def_cor = Math.round(def_cor * 1.5);
+            }
+            break;
+        case "ふゆう":
+            if (!(document.getElementById("SmackDown").checked)) {
+                landed = 0;
+                if (move_type[0].value == "9") {
+                    efc = 0;
+                }
+            }
+            break;
+        case "マルチスケイル":
+            M = Math.round(M * 2048 / 4096);
+            break;
+        case "もふもふ":
+            if (move_type[0].value == "2") {
+                M = Math.round(M * 2);
+            }
+            if (move_parameter[0].value == "1") {
+                M = Math.round(M * 2048 / 4096);
+            }
+            break;
+        case "わざわいのうつわ":
+            if (cat == "2") {
+                atk_cor = Math.round(atk_cor * 3072 / 4096);
+            }
+            break;
+        case "わざわいのおふだ":
+            if (cat == "1") {
+                atk_cor = Math.round(atk_cor * 3072 / 4096);
+            }
+            break;
+        default:
+            break;
+    }
+    //フレンドガード補正
+    if (document.getElementById("FriendGuard").checked) {
+        M = Math.round(M * 3072 / 4096);
+    }
+    //攻撃側持ち物補正
+    switch (poke1.getElementsByClassName("item")[0].value) {
+        case "0": //なし
+            break;
+        case "1": //プレート系
+            pwr_cor = Math.round(pwr_cor * 4915 / 4096);
+            break;
+        case "2": //いのちのたま
+            M = Math.round(M * 5324 /4096);
+            break;
+        case "3": //こだわりハチマキ
+            if (cat == "1") {
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
+            }
+            break;
+        case "4": //こだわりメガネ
+            if (cat == "2") {
+                atk_cor = Math.round(atk_cor * 6144 / 4096);
+            }
+            break;
+        case "6": //達人の帯
+            if (efc > 1.9) {
+                M = Math.round(M * 4915 / 4096);
+            }
+            break;
+        case "7": //ちからのハチマキ
+            if (cat == "1") {
+                pwr_cor = Math.round(pwr_cor * 4505 / 4096);
+            }
+            break;
+        case "8": //ものしりメガネ
+            if (cat == "2") {
+                pwr_cor = Math.round(pwr_cor * 4505 / 4096);
+            }
+            break;
+        case "9": //ノーマルジュエル
+            if (move_type[0].value == "1") {
+                pwr_cor = Math.round(pwr_cor * 5325 / 4096);
+            }
+            break;
+        default:
+            break;
+    }
+    //防御側持ち物補正
+    switch (poke2.getElementsByClassName("item")[0].value) {
+        case "0": //なし
+            break;
+        case "1": //半減きのみ
+            if (efc > 1.9) {
+                M = Math.round(M * 2048 / 4096);
+            }
+            break;
+        case "2": //チョッキ
+            if (cat == "2") {
+                def_cor = Math.round(def_cor * 1.5);
+            }
+            break;
+        default:
+            break;
+    }
+    //てだすけ補正
+    if (document.getElementById("HelpingHand").checked) {
+        pwr_cor = Math.round(pwr_cor * 6144 / 4096);
+    }
+    //じゅうでん補正
+    if (document.getElementById("Charge").checked && move_type[0].value =="4") {
+        pwr_cor = Math.round(pwr_cor * 2);
+    }
 
-    //最終威力計算
-    pwr = toInt(pwr *pwr_cor /4096);
+    pwr = toInt(pwr * pwr_cor / 4096);   //最終威力計算（五捨五超入）
+    atk = toInt(atk * atk_cor / 4096);   //最終攻撃計算
+    def = toInt(def * def_cor / 4096);   //最終防御計算
 
-    let result;
+    let result;                                   //最大乱数の結果
     result = Math.floor(22 * pwr * atk / def);
     result = Math.floor(result /50) +2;
+    //範囲補正　（五捨五超入）
+    if (document.getElementById("battlestyle").battlestyle.value == "double") {
+        if (move_parameter[7].value == "2") { //複数範囲
+            result = toInt(result * 0.75);
+        }
+    }
+    //最低乱数(乱数補正計算後は切り捨て)
     let min;
-    min = Math.floor(0.85 * result);                       //最低乱数(乱数補正計算後は切り捨て)
+    min = Math.floor(0.85 * result);         
     //一致補正(五捨五超入)
     result = toInt(result * stab);
     min = toInt(min * stab);
-    //タイプ相性反映 　(てきおうりょくここでやりたい)
+    //タイプ相性反映(切り捨て)
     result = Math.floor(result * efc);
     min = Math.floor(min * efc);
+    //補正値:Mの計算(五捨五超入)
+    result = toInt(result * M / 4096);
+    min = toInt(min * M / 4096);
     move.getElementsByClassName("result")[0].innerHTML = String(min) + ' ~ ' + String(result);
 }
 //タイプ相性
