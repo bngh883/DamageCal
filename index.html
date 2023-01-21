@@ -493,6 +493,7 @@
                         <option value="1">タイプ半減系きのみ</option>
                         <option value="2">とつげきチョッキ</option>
                         <option value="3">ブーストエナジー</option>
+                        <option value="4">ふうせん</option>
                     </select>
                 </div>
                 <!--数値群-->
@@ -755,7 +756,8 @@
                 <br>
                 <label for="power">いりょく <input type="number" class="power" step="5"> </label>
                 <br>
-                <input type="button" onclick="clickResultDisp(1)" value="計算">
+                <input type="button" onclick="clickResultDisp(1,0)" value="計算">
+                <input type="button" onclick="clickResultDisp(1,1)" value="詳細">
                 <br>
                 <label class="result">ここに計算結果</label>
                 <!--隠しパラメータ-->
@@ -801,7 +803,8 @@
                 <br>
                 <label for="power">いりょく <input type="number" class="power" step="5"> </label>
                 <br>
-                <input type="button" onclick="clickResultDisp(2)" value="計算">
+                <input type="button" onclick="clickResultDisp(2,0)" value="計算">
+                <input type="button" onclick="clickResultDisp(2,1)" value="詳細">
                 <br>
                 <label class="result">ここに計算結果</label>
                 <!--隠しパラメータ-->
@@ -847,7 +850,8 @@
                 <br>
                 <label for="power">いりょく <input type="number" class="power" step="5"> </label>
                 <br>
-                <input type="button" onclick="clickResultDisp(3)" value="計算">
+                <input type="button" onclick="clickResultDisp(3,0)" value="計算">
+                <input type="button" onclick="clickResultDisp(3,1)" value="詳細">
                 <br>
                 <label class="result">ここに計算結果</label>
                 <!--隠しパラメータ-->
@@ -859,6 +863,79 @@
                 <input type="hidden" name="parameter" value="0"><!--斬撃-->
                 <input type="hidden" name="parameter" value="0"><!--波動-->
                 <input type="hidden" name="parameter" value="0"><!--範囲-->
+            </form>
+        </div>
+        <!--結果詳細表示-->
+        <div class="result-detail">
+            <form id="detail" name="detail">
+                <h3>詳細結果</h3>
+                <a>赤:1発   青:2耐え</a>
+                <table class="damage_table" border="1" width="100%">
+                    <thead>
+                        <!--乱数幅-->
+                        <tr>
+                            <th>乱数</th>
+                            <th>0.85</th>
+                            <th>0.86</th>
+                            <th>0.87</th>
+                            <th>0.88</th>
+                            <th>0.89</th>
+                            <th>0.90</th>
+                            <th>0.91</th>
+                            <th>0.92</th>
+                            <th>0.93</th>
+                            <th>0.94</th>
+                            <th>0.95</th>
+                            <th>0.96</th>
+                            <th>0.97</th>
+                            <th>0.98</th>
+                            <th>0.99</th>
+                            <th>1.00</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--通常-->
+                        <tr>
+                            <th>通常</th>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                            <td class="normal"></td>
+                        </tr>
+                        <!--急所-->
+                        <tr>
+                            <th>急所</th>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                            <td class="critical"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <!--フッター-->

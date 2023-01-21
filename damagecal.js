@@ -1,5 +1,5 @@
 //ダメージ計算関数
-function clickResultDisp(num){
+function clickResultDisp(num, detail){
     //環境
     let style_value = document.getElementById("battlestyle").battlestyle.value;  //シングルかダブル
     let weather_value = document.getElementById("weather").weather.value;        //天候
@@ -36,6 +36,10 @@ function clickResultDisp(num){
     }else{                  //特殊技なので特攻と特防
         atk = poke1.getElementsByClassName("status")[3].innerHTML;
         def = poke2.getElementsByClassName("status")[4].innerHTML;
+    }
+    //サイコショック
+    if (move_name == "サイコショック") {
+        def = poke2.getElementsByClassName("status")[2].innerHTML;
     }
     atk = parseInt(atk); def = parseInt(def);
     //わざ、ポケモンのタイプ取得
@@ -494,6 +498,14 @@ function clickResultDisp(num){
                 def_cor = Math.round(def_cor * 1.5);
             }
             break;
+        case "4":
+            if (!(document.getElementById("SmackDown").checked)) {
+                poke2_landed = 0;
+                if (move_type == "9") {
+                    efc = 0;
+                }
+            }
+            break;
         default:
             break;
     }
@@ -549,7 +561,12 @@ function clickResultDisp(num){
         default:
             break;
     }
-    
+    //フリーズドライ
+    if (move_name == "フリーズドライ") {
+        if (poke2_type1 == "3" || poke2_type2 == "3") {
+            efc = efc * 4;
+        }
+    }
 
     pwr = toInt(pwr * pwr_cor / 4096);   //最終威力計算（五捨五超入）
     atk = toInt(atk * atk_cor / 4096);   //最終攻撃計算
@@ -582,6 +599,50 @@ function clickResultDisp(num){
             break;
         default:
             break;
+    }
+    //詳細表示設定の確認
+    if (detail == 1) {
+        //防御側HP取得
+        let defHP = poke2.getElementsByClassName("status")[0].innerHTML;
+        defHP = parseInt(defHP);
+        let move_detail = document.getElementById("detail");
+        let normals = move_detail.getElementsByClassName("normal");
+        let criticals = move_detail.getElementsByClassName("critical");
+        for (let i = 0; i < 16; i++) {
+            let result_detail = result;
+            let result_critical = toInt(result * 1.5); //急所補正
+            //乱数補正（切り捨て）
+            let rand = (85 + i) / 100;
+            result_detail = Math.floor(result_detail * rand);
+            result_critical = Math.floor(result_critical * rand);
+            //一致補正(五捨五超入)
+            result_detail = toInt(result_detail * stab);
+            result_critical = toInt(result_critical * stab);
+            //タイプ相性反映(切り捨て)
+            result_detail = Math.floor(result_detail * efc);
+            result_critical = Math.floor(result_critical * efc);
+            //補正値:Mの計算(五捨五超入)
+            result_detail = toInt(result_detail * M / 4096);
+            result_critical = toInt(result_critical * M / 4096);
+            normals[i].innerHTML = result_detail;
+            criticals[i].innerHTML = result_critical;
+            //　2発未満が青、1発以上が赤
+            if (defHP < result_detail) {
+                normals[i].style.color = '#ff0000';
+            }else if (defHP < result_detail*2) {
+                normals[i].style.color = '#000000';
+            }else{
+                normals[i].style.color = '#0000ff';
+            }
+            if (defHP < result_critical) {
+                criticals[i].style.color = '#ff0000';
+            }else if (defHP < result_critical*2) {
+                criticals[i].style.color = '#000000';
+            }else{
+                criticals[i].style.color = '#0000ff';
+            }
+        }
+        return;
     }
     //最低乱数(乱数補正計算後は切り捨て)
     let min;

@@ -43,7 +43,7 @@ h3{color: red;}
 }
 
 /*環境のラジオボタン*/
-input[type=radio]{
+input[type="radio"]{
     display: none;  /* ラジオボタンを非表示にする */
 }
 input[type="radio"]:checked + label{
