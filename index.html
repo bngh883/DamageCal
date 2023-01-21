@@ -41,7 +41,6 @@
                 <input type="radio" name="field" value="misty" id="misty"><label for="misty" class="label">ミスト</label>
             </form>
         </div>
-
         <!--ポケモン-->
         <div class="pokemon">
             <!--ポケモン1-->
@@ -49,7 +48,9 @@
                 <h3>攻撃ポケモン</h3>
                 <!--基本情報-->
                 <div class="row">
+                    <label for="poke-name">ポケモン</label>
                     <input type="text" class="poke-name" onchange="SearchPokemon(1)">
+                    <label for="nature">せいかく</label>
                     <select class="nature">
                         <option value="21">いじっぱり A+C-</option>
                         <option value="3">ひかえめ C+A-</option>
@@ -73,6 +74,8 @@
                         <option value="32">のうてんき B+D-</option>
                         <option value="14">おとなしい D+B-</option>
                     </select>
+                    <br>
+                    <label for="poke-type">タイプ</label>
                     <select class="poke-type">
                         <option value="1">ノーマル</option>
                         <option value="2">ほのお</option>
@@ -94,6 +97,28 @@
                         <option value="18">フェアリー</option>
                     </select>
                     <select class="poke-type">
+                        <option value="0">-</option>
+                        <option value="1">ノーマル</option>
+                        <option value="2">ほのお</option>
+                        <option value="3">みず</option>
+                        <option value="4">でんき</option>
+                        <option value="5">くさ</option>
+                        <option value="6">こおり</option>
+                        <option value="7">かくとう</option>
+                        <option value="8">どく</option>
+                        <option value="9">じめん</option>
+                        <option value="10">ひこう</option>
+                        <option value="11">エスパー</option>
+                        <option value="12">むし</option>
+                        <option value="13">いわ</option>
+                        <option value="14">ゴースト</option>
+                        <option value="15">ドラゴン</option>
+                        <option value="16">あく</option>
+                        <option value="17">はがね</option>
+                        <option value="18">フェアリー</option>
+                    </select>
+                    <label for="terastal">テラスタル</label>
+                    <select class="terastal">
                         <option value="0">-</option>
                         <option value="1">ノーマル</option>
                         <option value="2">ほのお</option>
@@ -137,6 +162,7 @@
                         <option value="そうだいしょう1">そうだいしょう(1体)</option>
                         <option value="そうだいしょう2">そうだいしょう(2体)</option>
                         <option value="そうだいしょう3">そうだいしょう(3体)</option>
+                        <option value="ちからずく">ちからずく</option>
                         <option value="ちからもち">ちからもち</option>
                         <option value="テクニシャン">テクニシャン</option>
                         <option value="てきおうりょく">てきおうりょく</option>
@@ -404,7 +430,9 @@
                 <h3>防御ポケモン</h3>
                 <!--基本情報-->
                 <div class="row">
+                    <label for="poke-name">ポケモン</label>
                     <input type="text" class="poke-name" onchange="SearchPokemon(2)">
+                    <label for="nature">せいかく</label>
                     <select class="nature">
                         <option value="21">いじっぱり A+C-</option>
                         <option value="3">ひかえめ C+A-</option>
@@ -428,6 +456,8 @@
                         <option value="32">のうてんき B+D-</option>
                         <option value="14">おとなしい D+B-</option>
                     </select>
+                    <br>
+                    <label for="poke-type">タイプ</label>
                     <select class="poke-type">
                         <option value="1">ノーマル</option>
                         <option value="2">ほのお</option>
@@ -449,6 +479,28 @@
                         <option value="18">フェアリー</option>
                     </select>
                     <select class="poke-type">
+                        <option value="0">-</option>
+                        <option value="1">ノーマル</option>
+                        <option value="2">ほのお</option>
+                        <option value="3">みず</option>
+                        <option value="4">でんき</option>
+                        <option value="5">くさ</option>
+                        <option value="6">こおり</option>
+                        <option value="7">かくとう</option>
+                        <option value="8">どく</option>
+                        <option value="9">じめん</option>
+                        <option value="10">ひこう</option>
+                        <option value="11">エスパー</option>
+                        <option value="12">むし</option>
+                        <option value="13">いわ</option>
+                        <option value="14">ゴースト</option>
+                        <option value="15">ドラゴン</option>
+                        <option value="16">あく</option>
+                        <option value="17">はがね</option>
+                        <option value="18">フェアリー</option>
+                    </select>
+                    <label for="terastal">テラスタル</label>
+                    <select class="terastal">
                         <option value="0">-</option>
                         <option value="1">ノーマル</option>
                         <option value="2">ほのお</option>
@@ -773,6 +825,7 @@
                 <input type="hidden" name="parameter" value="0"><!--斬撃-->
                 <input type="hidden" name="parameter" value="0"><!--波動-->
                 <input type="hidden" name="parameter" value="0"><!--範囲-->
+                <input type="hidden" name="parameter" value="0"><!--ちからずく対応追加効果-->
             </form>
             <!--わざ2-->
             <form id="move2" name="move2">
@@ -820,6 +873,7 @@
                 <input type="hidden" name="parameter" value="0"><!--斬撃-->
                 <input type="hidden" name="parameter" value="0"><!--波動-->
                 <input type="hidden" name="parameter" value="0"><!--範囲-->
+                <input type="hidden" name="parameter" value="0"><!--ちからずく対応追加効果-->
             </form>
             <!--わざ3-->
             <form id="move3" name="move3">
@@ -867,6 +921,7 @@
                 <input type="hidden" name="parameter" value="0"><!--斬撃-->
                 <input type="hidden" name="parameter" value="0"><!--波動-->
                 <input type="hidden" name="parameter" value="0"><!--範囲-->
+                <input type="hidden" name="parameter" value="0"><!--ちからずく対応追加効果-->
             </form>
         </div>
         <!--結果詳細表示-->

@@ -37,26 +37,39 @@ function clickResultDisp(num, detail){
         atk = poke1.getElementsByClassName("status")[3].innerHTML;
         def = poke2.getElementsByClassName("status")[4].innerHTML;
     }
-    //サイコショック
-    if (move_name == "サイコショック") {
+    //サイコショック、サイコブレイク
+    if (move_name == "サイコショック" || move_name == "サイコブレイク") {
         def = poke2.getElementsByClassName("status")[2].innerHTML;
     }
     atk = parseInt(atk); def = parseInt(def);
     //わざ、ポケモンのタイプ取得
     let move_type = move.getElementsByClassName("move-type")[0].value;
-    let poke1_type1, poke1_type2, poke2_type1, poke2_type2;
+    let poke1_type1, poke1_type2, poke2_type1, poke2_type2, poke1_terastal, poke2_terastal;
     let poke1_type = poke1.getElementsByClassName("poke-type");
     poke1_type1 = poke1_type[0].value;
     poke1_type2 = poke1_type[1].value;
+    poke1_terastal = poke1.getElementsByClassName("terastal")[0].value;
     let poke2_type = poke2.getElementsByClassName("poke-type");
-    poke2_type1 = poke2_type[0].value;
-    poke2_type2 = poke2_type[1].value;
-    //一致補正
+    
+    poke2_terastal = poke2.getElementsByClassName("terastal")[0].value;
+    //攻撃側テラスタルと一致補正の処理
     let stab = 1.0;
-    if (move_type==poke1_type1 || move_type==poke1_type2){     
+    if (move_type==poke1_type1 || move_type==poke1_type2 || move_type==poke1_terastal){     
         stab = 1.5;
+        if (poke1_type1==poke1_terastal || poke1_type2==poke1_terastal) {
+            stab = 2.0;
+        }
     }
-    let poke1_landed = 1; let poke2_landed = 1;                         //接地しているか
+    //防御側テラスタル
+    if (poke2_terastal == "0") {
+        poke2_type1 = poke2_type[0].value;
+        poke2_type2 = poke2_type[1].value;
+    } else {
+        poke2_type1 = poke1_terastal;
+        poke2_type2 = "0";
+    }
+
+    let poke1_landed = 1; let poke2_landed = 1;           //接地しているか
     if (poke1_type1 == "10" || poke1_type2 == "10") {
         poke1_landed = 0;
     }
@@ -220,6 +233,11 @@ function clickResultDisp(num, detail){
         case "そうだいしょう2":
             pwr_cor = Math.round(pwr_cor * 4915 / 4096);
             break;
+        case "ちからずく":
+            if (move_parameter[8].value == "1") {
+                pwr_cor = Math.round(pwr_cor * 5325 / 4096);
+            }
+            break;
         case "ちからもち":
         case "ヨガパワー":
             if (cat == "1") {
@@ -229,6 +247,8 @@ function clickResultDisp(num, detail){
         case "てきおうりょく":
             if (stab == 1.5) {
                 stab = 2.0;
+            } else if (stab == 2.0){
+                stab = 2.25;             //テラスタル＋適応力
             }
             break;
         case "テクニシャン":
@@ -646,7 +666,6 @@ function clickResultDisp(num, detail){
                 criticals[i].style.color = '#0000ff';
             }
         }
-        return;
     }
     //最低乱数(乱数補正計算後は切り捨て)
     let min;

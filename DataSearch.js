@@ -198,7 +198,8 @@ function MoveSearch(num){
             parameter[4].value = cells[11]; //かみつき
             parameter[5].value = cells[12]; //斬撃
             parameter[6].value = cells[13]; //波動
-            parameter[7].value = cells[7];
+            parameter[7].value = cells[7];  //範囲
+            parameter[8].value = cells[14]; //ちからずく対応追加効果
             return;
         }
     }
