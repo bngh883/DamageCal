@@ -542,6 +542,10 @@ function clickResultDisp(num, detail){
             }
             break;
         case "psychic":
+            if (move_name == "ワイドフォース") {
+                move_parameter[7].value = "2";
+                pwr_cor = Math.floor(pwr_cor * 6144 / 4096);
+            }
             if (move_type == "11" && poke1_landed == 1) {
                 pwr_cor = Math.round(pwr_cor * 5325 / 4096);
             }
