@@ -12,7 +12,10 @@ h3{color: red;}
 .environment form{
     margin: 10px;
 }
-
+/*サブ環境*/
+.sub-environment label{
+    margin-left: 30px;
+}
 /*わざ*/
 @media (min-width:520px) {
     .moves{

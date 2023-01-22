@@ -41,6 +41,10 @@ function clickResultDisp(num, detail){
     if (move_name == "サイコショック" || move_name == "サイコブレイク") {
         def = poke2.getElementsByClassName("status")[2].innerHTML;
     }
+    //イカサマ
+    if (move_name == "イカサマ") {
+        atk = poke2.getElementsByClassName("status")[1].innerHTML;
+    }
     atk = parseInt(atk); def = parseInt(def);
     //わざ、ポケモンのタイプ取得
     let move_type = move.getElementsByClassName("move-type")[0].value;
@@ -65,7 +69,7 @@ function clickResultDisp(num, detail){
         poke2_type1 = poke2_type[0].value;
         poke2_type2 = poke2_type[1].value;
     } else {
-        poke2_type1 = poke1_terastal;
+        poke2_type1 = poke2_terastal;
         poke2_type2 = "0";
     }
 
@@ -90,6 +94,12 @@ function clickResultDisp(num, detail){
         }
     }
     
+    //やけど
+    let burn = 0;
+    if (document.getElementById("Burned").checked) {
+        burn = 1;
+    }
+    
     //基礎威力
     let pwr = move.getElementsByClassName("power")[0].value;  
     pwr = parseInt(pwr);
@@ -98,7 +108,35 @@ function clickResultDisp(num, detail){
     let pwr_cor = 4096;       //威力補正値
     let atk_cor = 4096;       //攻撃補正値
     let def_cor = 4096;       //防御補正値
-
+    //サブ環境
+    //じゅうりょく
+    if (document.getElementById("Gravity").checked) {
+        poke1_landed = 1;
+        poke2_landed = 1;
+        if (move_type == "9"){    // わざがじめんタイプ
+            if (poke2_type1 == "10") {                 //防御側が飛行タイプ
+                efc = TypeCompa("9", poke2_type2, "0");
+            }else if (poke2_type2 =="10"){
+                efc = TypeCompa("9", poke2_type1, "0");
+            }
+        }
+        if (move_name == "Gのちから") {
+            pwr_cor = Math.round(pwr_cor * 1.5);
+        }
+    }
+    //わざわい
+    if (document.getElementById("Vessel").checked && cat == "2") {
+        pwr_cor = Math.round(pwr_cor * 0.75);
+    }
+    if (document.getElementById("Tablets").checked && cat == "1") {
+        pwr_cor = Math.round(pwr_cor * 0.75);
+    }
+    if (document.getElementById("Beads").checked && cat == "2") {
+        def_cor = Math.round(def_cor * 0.75);
+    }
+    if (document.getElementById("Sword").checked && cat == "1") {
+        def_cor = Math.round(def_cor * 0.75);
+    }
     //壁補正
     if ((document.getElementById("Reflect").checked && cat == "1") || 
                (document.getElementById("LightScreen").checked && cat == "2" )) {
@@ -191,8 +229,9 @@ function clickResultDisp(num, detail){
             break;
         case "ごりむちゅう":
         case "こんじょう":
-            if (cat == "1") {
+            if (burn == 1 && cat == "1") {
                 atk = Math.round(atk * 6144 / 4096); 
+                burn = 0;   //やけど効果無視
             }
             break;
         case "はりきり":
@@ -273,7 +312,7 @@ function clickResultDisp(num, detail){
             }
             break;
         case "ねつぼうそう":
-            if (cat == "2") {
+            if (burn == 1 && cat == "2") {
                 pwr_cor = Math.round(pwr_cor * 6144 / 4096);
             }
             break;
@@ -426,7 +465,7 @@ function clickResultDisp(num, detail){
             }
             break;
         case "ふゆう":
-            if (!(document.getElementById("SmackDown").checked)) {
+            if (!(document.getElementById("SmackDown").checked || document.getElementById("Gravity").checked)) {
                 poke2_landed = 0;
                 if (move_type == "9") {
                     efc = 0;
@@ -442,16 +481,6 @@ function clickResultDisp(num, detail){
             }
             if (move_parameter[0].value == "1") {
                 M = Math.round(M * 2048 / 4096);
-            }
-            break;
-        case "わざわいのうつわ":
-            if (cat == "2") {
-                atk_cor = Math.round(atk_cor * 3072 / 4096);
-            }
-            break;
-        case "わざわいのおふだ":
-            if (cat == "1") {
-                atk_cor = Math.round(atk_cor * 3072 / 4096);
             }
             break;
         default:
@@ -518,14 +547,16 @@ function clickResultDisp(num, detail){
                 def_cor = Math.round(def_cor * 1.5);
             }
             break;
-        case "4":
-            if (!(document.getElementById("SmackDown").checked)) {
+        case "4": //ふうせん
+            if (!(document.getElementById("SmackDown").checked || document.getElementById("Gravity").checked)) {
                 poke2_landed = 0;
                 if (move_type == "9") {
                     efc = 0;
                 }
             }
             break;
+        case "5": //しんかのきせき
+            def_cor = Math.round(def_cor * 1.5);
         default:
             break;
     }
@@ -645,6 +676,11 @@ function clickResultDisp(num, detail){
             //タイプ相性反映(切り捨て)
             result_detail = Math.floor(result_detail * efc);
             result_critical = Math.floor(result_critical * efc);
+            //やけど補正（五捨五超入）
+            if (burn == 1 && cat=="1") {
+                result_detail = toInt(result_detail / 2);
+                result_critical = toInt(result_critical / 2);
+            }
             //補正値:Mの計算(五捨五超入)
             result_detail = toInt(result_detail * M / 4096);
             result_critical = toInt(result_critical * M / 4096);
@@ -676,6 +712,11 @@ function clickResultDisp(num, detail){
     //タイプ相性反映(切り捨て)
     result = Math.floor(result * efc);
     min = Math.floor(min * efc);
+    //やけど補正（五捨五超入）
+    if (burn == 1 && cat=="1") {
+        result = toInt(result / 2);
+        min = toInt(min / 2);
+    }
     //補正値:Mの計算(五捨五超入)
     result = toInt(result * M / 4096);
     min = toInt(min * M / 4096);
@@ -721,5 +762,3 @@ function toInt(num){      //五捨五超入
         return a;
     }
 }
-
-

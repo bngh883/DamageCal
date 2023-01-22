@@ -16,7 +16,8 @@
         <header>
             <h1>ダメージ計算機</h1>
             <ul>
-                <li>しんりょく等のツール内で指定できない条件下で発動する特性はすべて自動で有効になります。(プラス、マイナスも常に有効)</li>
+                <li>しんりょく等のツール内で指定できない条件下で発動する特性はすべて自動で有効になります。(プラス、マイナス、輝石も無条件で有効)</li>
+                <li>ねつぼうそう、こんじょうを有効にする場合はやけどにチェックをいれて下さい。</li>
                 <li>クォークチャージ、こだいかっせいは対応する環境下か持ち物がブーストエナジーでないと無効になります。</li>
             </ul>
         </header>
@@ -40,6 +41,31 @@
                 <input type="radio" name="field" value="glass" id="glass"><label for="glass" class="label">グラス</label>
                 <input type="radio" name="field" value="misty" id="misty"><label for="misty" class="label">ミスト</label>
             </form>
+        </div>
+        <!--サブ環境-->
+        <div class="sub-environment">
+            <div>
+                <label for="Gravity">
+                    <input type="checkbox" id="Gravity">
+                    じゅうりょく
+                </label>
+                <label for="Vessel">
+                    <input type="checkbox" id="Vessel">
+                    わざわいのうつわ
+                </label>
+                <label for="Tablets">
+                    <input type="checkbox" id="Tablets">
+                    わざわいのおふだ
+                </label>
+                <label for="Beads">
+                    <input type="checkbox" id="Beads">
+                    わざわいのたま
+                </label>
+                <label for="Sword">
+                    <input type="checkbox" id="Sword">
+                    わざわいのつるぎ
+                </label>
+            </div>
         </div>
         <!--ポケモン-->
         <div class="pokemon">
@@ -177,15 +203,12 @@
                         <option value="パンクロック">パンクロック</option>
                         <option value="フェアリースキン">フェアリースキン</option>
                         <option value="プラス">プラス</option>
-                        <option value="フラワーギフト">フラワーギフト</option>
                         <option value="マイナス">マイナス</option>
                         <option value="むしのしらせ">むしのしらせ</option>
                         <option value="メガランチャー">メガランチャー</option>
                         <option value="もうか">もうか</option>
                         <option value="もらいび">もらいび</option>
                         <option value="ヨガパワー">ヨガパワー</option>
-                        <option value="わざわいのたま">わざわいのたま</option>
-                        <option value="わざわいのつるぎ">わざわいのつるぎ</option>
                     </select>
                     <label for="item">もちもの</label>
                     <select class="item">
@@ -419,9 +442,14 @@
                         <input type="checkbox" id="Charge">
                         じゅうでん
                     </label>
+                    <br>
                     <label for="PowerSpot">
                         <input type="checkbox" id="PowerSpot">
                         パワースポット
+                    </label>
+                    <label for="Burned">
+                        <input type="checkbox" id="Burned">
+                        やけど
                     </label>
                 </div>
             </form>
@@ -540,8 +568,6 @@
                         <option value="ふゆう">ふゆう</option>
                         <option value="マルチスケイル">マルチスケイル</option>
                         <option value="もふもふ">もふもふ</option>
-                        <option value="わざわいのうつわ">わざわいのうつわ</option>
-                        <option value="わざわいのおふだ">わざわいのおふだ</option>
                     </select>
                     <label for="item">もちもの</label>
                     <select class="item">
@@ -550,6 +576,7 @@
                         <option value="2">とつげきチョッキ</option>
                         <option value="3">ブーストエナジー</option>
                         <option value="4">ふうせん</option>
+                        <option value="5">しんかのきせき</option>
                     </select>
                 </div>
                 <!--数値群-->
