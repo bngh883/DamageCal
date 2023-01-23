@@ -1,9 +1,10 @@
 h1{font-size: 30px; color: black;}
-h3{color: red;}
+h3{font-size: 20px; color: red;}
 
 /*環境*/
 .environment{
     display: flex;
+    width:100%;
     padding: 10px;
 }
 .environment div{
@@ -13,8 +14,13 @@ h3{color: red;}
     margin: 10px;
 }
 /*サブ環境*/
+.sub-environment{
+    display: flex;
+}
 .sub-environment label{
     margin-left: 30px;
+    width: 100%;
+    font-size: 17px;
 }
 /*わざ*/
 @media (min-width:520px) {
@@ -34,6 +40,7 @@ h3{color: red;}
     padding: 10px;
     margin: 5px;
 }
+
 #form2{
     background-color: rgb(142, 246, 250);
     padding: 10px;
