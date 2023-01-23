@@ -87,7 +87,11 @@ function clickResultDisp(num, detail){
         poke2_landed = 1;
         if (move_type == "9"){    // わざがじめんタイプ
             if (poke2_type1 == "10") {                 //防御側が飛行タイプ
-                efc = TypeCompa("9", poke2_type2, "0");
+                if (poke2_type2 == "0" || poke2_type2 == "10") {
+                    efc = 1.0;
+                }else {
+                    efc = TypeCompa("9", poke2_type2, "0");
+                }
             }else if (poke2_type2 =="10"){
                 efc = TypeCompa("9", poke2_type1, "0");
             }
@@ -115,7 +119,11 @@ function clickResultDisp(num, detail){
         poke2_landed = 1;
         if (move_type == "9"){    // わざがじめんタイプ
             if (poke2_type1 == "10") {                 //防御側が飛行タイプ
-                efc = TypeCompa("9", poke2_type2, "0");
+                if (poke2_type2 == "0" || poke2_type2 == "10") {
+                    efc = 1.0;
+                }else {
+                    efc = TypeCompa("9", poke2_type2, "0");
+                }
             }else if (poke2_type2 =="10"){
                 efc = TypeCompa("9", poke2_type1, "0");
             }

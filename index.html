@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="DamageCal.css" />
         <title>ポケモンダメージ計算ツール</title> <!--ここはページの名前-->
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
         <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-        <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script src="damagecal.js"></script>
         <script src="DataSearch.js"></script>
         <script src="SearchUI.js"></script>
@@ -809,13 +809,12 @@
             <!--わざ1-->
             <form id="move1" name="move1">
                 <h3>わざ1</h3>
-                <label for="move-name">技名 <input type="text" class="move-name" onchange="MoveSearch(1)"></label>
+                <label for="move-name">わざ <input type="text" class="move-name" onchange="MoveSearch(1)"></label>
                 <br>
                 <select class="category">
                     <option value="1">物理</option>
                     <option value="2">特殊</option>
                 </select>
-                <br>
                 <select class="move-type">
                     <option value="1">ノーマル</option>
                     <option value="2">ほのお</option>
@@ -857,13 +856,12 @@
             <!--わざ2-->
             <form id="move2" name="move2">
                 <h3>わざ2</h3>
-                <label for="move-name">技名 <input type="text" class="move-name" onchange="MoveSearch(2)"></label>
+                <label for="move-name">わざ <input type="text" class="move-name" onchange="MoveSearch(2)"></label>
                 <br>
                 <select class="category">
                     <option value="1">物理</option>
                     <option value="2">特殊</option>
                 </select>
-                <br>
                 <select class="move-type">
                     <option value="1">ノーマル</option>
                     <option value="2">ほのお</option>
@@ -905,13 +903,12 @@
             <!--わざ3-->
             <form id="move3" name="move3">
                 <h3>わざ3</h3>
-                <label for="move-name">技名 <input type="text" class="move-name" onchange="MoveSearch(3)"></label>
+                <label for="move-name">わざ <input type="text" class="move-name" onchange="MoveSearch(3)"></label>
                 <br>
                 <select class="category">
                     <option value="1">物理</option>
                     <option value="2">特殊</option>
                 </select>
-                <br>
                 <select class="move-type">
                     <option value="1">ノーマル</option>
                     <option value="2">ほのお</option>
