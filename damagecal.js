@@ -82,6 +82,10 @@ function clickResultDisp(num, detail){
     }
     //タイプ相性
     let efc = TypeCompa(move_type, poke2_type1, poke2_type2);
+    //フライングプレス
+    if (move_name == "フライングプレス") {
+        efc = efc * TypeCompa("10", poke2_type1, poke2_type2);
+    }
     //うちおとす状態
     if (document.getElementById("SmackDown").checked) {
         poke2_landed = 1;
@@ -329,12 +333,22 @@ function clickResultDisp(num, detail){
                 pwr_cor = Math.round(pwr_cor * 6144 / 4096);
             }
             break;
+        case "ハドロンエンジン":
+            if (field_value == "electric" && cat == "2") {
+                pwr_cor = Math.round(pwr_cor * 5461 / 4096);
+            }
+            break;
         case "はりこみ":
             atk_cor = Math.round(atk_cor * 2);
             break;
         case "パンクロック":
             if (move_parameter[1].value == "1") {
                 pwr_cor = Math.round(pwr_cor * 5325 / 4096);
+            }
+            break;
+        case "ひひいろのこどう":
+            if (weather_value == "sunny" && cat == "1") {
+                pwr_cor = Math.round(pwr_cor * 5461 / 4096);
             }
             break;
         case "フェアリースキン":
@@ -630,6 +644,12 @@ function clickResultDisp(num, detail){
             efc = efc * 4;
         }
     }
+    //アクセルブレイク、イナズマドライブ
+    if (move_name == "アクセルブレイク" || move_name == "イナズマドライブ") {
+        if (efc > 1.9) {
+            M = Math.round(M * 5461 / 4096);
+        }
+    }
 
     pwr = toInt(pwr * pwr_cor / 4096);   //最終威力計算（五捨五超入）
     atk = toInt(atk * atk_cor / 4096);   //最終攻撃計算
@@ -710,6 +730,7 @@ function clickResultDisp(num, detail){
                 criticals[i].style.color = '#0000ff';
             }
         }
+        document.getElementById("detail").getElementsByTagName("h3")[0].innerHTML = "詳細結果：わざ"+String(num);
     }
     //最低乱数(乱数補正計算後は切り捨て)
     let min;

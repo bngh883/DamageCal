@@ -27,6 +27,15 @@ h3{font-size: 20px; color: red;}
     .moves{
         display: flex;
     }
+    #move1{
+        width: 33%;
+    }
+    #move2{
+        width: 33%;
+    }
+    #move3{
+        width: 33%;
+    }
 }
 .moves form{
     background-color: rgb(182, 255, 153);
@@ -59,7 +68,7 @@ table{
     width: 100%;
     text-align: center;
 }
-@media (min-width:1280px) {
+@media (min-width:1260px) {
     .pokemon{
         display: flex;
     }
