@@ -30,9 +30,21 @@ $(function(){
     'クレベース', 'ワシボン', 'ウォーグル', 'コマタナ', 'キリキザン', 'ドドゲザン', 'モノズ', 'ジヘッド', 'サザンドラ', 'ミガルーサ', 'ヘイラッシャ', 'シャリタツ', 'イダイナキバ', 
     'サケブシッポ', 'アラブルタケ', 'ハバタクカミ', 'チヲハウハネ', 'スナノケガワ', 'テツノワダチ', 'テツノツツミ', 'テツノカイナ', 'テツノコウベ', 'テツノドクガ', 'テツノイバラ', 'セビエ', 
     'セゴール', 'セグレイブ', 'コレクレー', 'サーフゴー', 'チオンジェン', 'パオジアン', 'ディンルー', 'イーユイ', 'トドロクツキ', 'テツノブジン', 'コライドン', 'ミライドン'];
+    //$(".poke-name").autocomplete({
+    //   source: pokemons,
+    //});
     $(".poke-name").autocomplete({
-        source: pokemons,
-    });
+        source: function(request, response) {
+            var seatchStr = request.term; //入力文字列取得
+            var list = [];
+            $.each(pokemons, function(index, value){
+                if (value.match(seatchStr) || value.match(hiraTokana(seatchStr)) || value.match(convertRomanToKana(seatchStr))) {
+                    list.push(value);
+                }
+            })
+            response(list);
+        }
+    })
 
     let moves = ['10まんばりき', '10まんボルト', '3ぼんのや', 'DDラリアット', 'Gのちから', 'Vジェネレート', 'アーマーキャノン', 'アームハンマー', 'アイアンテール', 'アイアンヘッド', 'アイアンローラー', 
                  'アイススピナー', 'アイスハンマー', 'あおいほのお', 'アクアカッター', 'アクアジェット', 'アクアステップ', 'アクアテール', 'アクアブレイク', 'あくうせつだん', 'アクセルブレイク', 
@@ -76,7 +88,176 @@ $(function(){
                   'やまあらし', 'ゆきなだれ', 'ゆめくい', 'ようかいえき', 'ようせいのかぜ', 'らいげき', 'ライジングボルト', 'らいめいげり', 'ラスターカノン', 'ラスターパージ', 'リーフストーム', 'リーフブレード', 
                   'リベンジ', 'りゅうせいぐん', 'りゅうのいぶき', 'りゅうのはどう', 'りんごさん', 'りんしょう', 'ルミナコリジョン', 'レイジングブル', 'れいとうパンチ', 'れいとうビーム', 'れんごく', 'れんぞくぎり', 
                   'ローキック', 'ロケットずつき', 'ロックブラスト', 'ワイドフォース', 'ワイドブレイカー', 'ワイルドボルト', 'わるあがき', 'ワンダースチーム'];
+    
     $(".move-name").autocomplete({
-        source: moves,
-    });
+        source: function(request, response) {
+            var seatchStr = request.term; //入力文字列取得
+            var list = [];
+            $.each(moves, function(index, value){
+                if (value.match(seatchStr) || value.match(hiraTokana(seatchStr)) || value.match(convertRomanToKana(seatchStr)) || value.match(kanaToHira(convertRomanToKana(seatchStr)))) {
+                    list.push(value);
+                }
+            })
+            response(list);
+        }
+    })
+
+    function hiraTokana(str){
+        return str.replace(/[\u3041-\u3096]/g, function(match) {
+            var chr = match.charCodeAt(0) + 0x60;
+            return String.fromCharCode(chr);
+        });
+    }
+    function kanaToHira(str) {
+        return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+            var chr = match.charCodeAt(0) - 0x60;
+            return String.fromCharCode(chr);
+        });
+    }
+     
+    const tree = {
+      a: 'ア', i: 'イ', u: 'ウ', e: 'エ', o: 'オ',
+      k: {
+        a: 'カ', i: 'キ', u: 'ク', e: 'ケ', o: 'コ',
+        y: { a: 'キャ', i: 'キィ', u: 'キュ', e: 'キェ', o: 'キョ' },
+      },
+      s: {
+        a: 'サ', i: 'シ', u: 'ス', e: 'セ', o: 'ソ',
+        h: { a: 'シャ', i: 'シ', u: 'シュ', e: 'シェ', o: 'ショ' },
+        y: { a: 'シャ', i: 'シィ', u: 'シュ', e: 'シェ', o: 'ショ' },
+      },
+      t: {
+        a: 'タ', i: 'チ', u: 'ツ', e: 'テ', o: 'ト',
+        h: { a: 'テャ', i: 'ティ', u: 'テュ', e: 'テェ', o: 'テョ' },
+        y: { a: 'チャ', i: 'チィ', u: 'チュ', e: 'チェ', o: 'チョ' },
+        s: { a: 'ツァ', i: 'ツィ', u: 'ツ', e: 'ツェ', o: 'ツォ' },
+      },
+      c: {
+        a: 'カ', i: 'シ', u: 'ク', e: 'セ', o: 'コ',
+        h: { a: 'チャ', i: 'チ', u: 'チュ', e: 'チェ', o: 'チョ' },
+        y: { a: 'チャ', i: 'チィ', u: 'チュ', e: 'チェ', o: 'チョ' },
+      },
+      q: {
+        a: 'クァ', i: 'クィ', u: 'ク', e: 'クェ', o: 'クォ',
+      },
+      n: {
+        a: 'ナ', i: 'ニ', u: 'ヌ', e: 'ネ', o: 'ノ', n: 'ン',
+        y: { a: 'ニャ', i: 'ニィ', u: 'ニュ', e: 'ニェ', o: 'ニョ' },
+      },
+      h: {
+        a: 'ハ', i: 'ヒ', u: 'フ', e: 'ヘ', o: 'ホ',
+        y: { a: 'ヒャ', i: 'ヒィ', u: 'ヒュ', e: 'ヒェ', o: 'ヒョ' },
+      },
+      f: {
+        a: 'ファ', i: 'フィ', u: 'フ', e: 'フェ', o: 'フォ',
+        y: { a: 'フャ', u: 'フュ', o: 'フョ' },
+      },
+      m: {
+        a: 'マ', i: 'ミ', u: 'ム', e: 'メ', o: 'モ',
+        y: { a: 'ミャ', i: 'ミィ', u: 'ミュ', e: 'ミェ', o: 'ミョ' },
+      },
+      y: { a: 'ヤ', i: 'イ', u: 'ユ', e: 'イェ', o: 'ヨ' },
+      r: {
+        a: 'ラ', i: 'リ', u: 'ル', e: 'レ', o: 'ロ',
+        y: { a: 'リャ', i: 'リィ', u: 'リュ', e: 'リェ', o: 'リョ' },
+      },
+      w: { a: 'ワ', i: 'ウィ', u: 'ウ', e: 'ウェ', o: 'ヲ' },
+      g: {
+        a: 'ガ', i: 'ギ', u: 'グ', e: 'ゲ', o: 'ゴ',
+        y: { a: 'ギャ', i: 'ギィ', u: 'ギュ', e: 'ギェ', o: 'ギョ' },
+      },
+      z: {
+        a: 'ザ', i: 'ジ', u: 'ズ', e: 'ゼ', o: 'ゾ',
+        y: { a: 'ジャ', i: 'ジィ', u: 'ジュ', e: 'ジェ', o: 'ジョ' },
+      },
+      j: {
+        a: 'ジャ', i: 'ジ', u: 'ジュ', e: 'ジェ', o: 'ジョ',
+        y: { a: 'ジャ', i: 'ジィ', u: 'ジュ', e: 'ジェ', o: 'ジョ' },
+      },
+      d: {
+        a: 'ダ', i: 'ヂ', u: 'ヅ', e: 'デ', o: 'ド',
+        h: { a: 'デャ', i: 'ディ', u: 'デュ', e: 'デェ', o: 'デョ' },
+        y: { a: 'ヂャ', i: 'ヂィ', u: 'ヂュ', e: 'ヂェ', o: 'ヂョ' },
+      },
+      b: {
+        a: 'バ', i: 'ビ', u: 'ブ', e: 'ベ', o: 'ボ',
+        y: { a: 'ビャ', i: 'ビィ', u: 'ビュ', e: 'ビェ', o: 'ビョ' },
+      },
+      v: {
+        a: 'ヴァ', i: 'ヴィ', u: 'ヴ', e: 'ヴェ', o: 'ヴォ',
+        y: { a: 'ヴャ', i: 'ヴィ', u: 'ヴュ', e: 'ヴェ', o: 'ヴョ' },
+      },
+      p: {
+        a: 'パ', i: 'ピ', u: 'プ', e: 'ペ', o: 'ポ',
+        y: { a: 'ピャ', i: 'ピィ', u: 'ピュ', e: 'ピェ', o: 'ピョ' },
+      },
+      x: {
+        a: 'ァ', i: 'ィ', u: 'ゥ', e: 'ェ', o: 'ォ',
+        y: {
+          a: 'ャ', i: 'ィ', u: 'ュ', e: 'ェ', o: 'ョ',
+        },
+        t: {
+          u: 'ッ',
+          s: {
+            u: 'ッ',
+          },
+        },
+      },
+      l: {
+        a: 'ァ', i: 'ィ', u: 'ゥ', e: 'ェ', o: 'ォ',
+        y: {
+          a: 'ャ', i: 'ィ', u: 'ュ', e: 'ェ', o: 'ョ',
+        },
+        t: {
+          u: 'ッ',
+          s: {
+            u: 'ッ',
+          },
+        },
+      },
+    };
+
+    function convertRomanToKana(original) {
+        const str = original.replace(/[Ａ-Ｚａ-ｚ]/, function(s) {String.fromCharCode(s.charCodeAt(0) - 65248)}).toLowerCase(), // 全角→半角→小文字
+            len = str.length;
+        let result = '',
+            tmp = '',
+            index = 0,
+            node = tree;
+        const push = function(char, toRoot) {
+            toRoot = toRoot ? toRoot : true;
+            result += char;
+            tmp = '';
+            node = toRoot ? tree : node;
+        };
+        while (index < len) {
+            const char = str.charAt(index);
+            if (char.match(/[a-z]/)) { // 英数字以外は考慮しない
+                if (char in node) {
+                    const next = node[char];
+                    if (typeof next === 'string') {
+                        push(next);
+                    } else {
+                        tmp += original.charAt(index);
+                        node = next;
+                    }
+                    index++;
+                    continue;
+                }
+                const prev = str.charAt(index - 1);
+                if (prev && (prev === 'n' || prev === char)) { // 促音やnへの対応
+                    push(prev === 'n' ? 'ン' : 'ッ', false);
+                }
+                if (node !== tree && char in tree) { // 今のノードがルート以外だった場合、仕切り直してチェックする
+                    push(tmp);
+                    continue;
+                }
+            }
+            push(tmp + char);
+            index++;
+        }
+        tmp = tmp.replace(/n$/, 'ン'); // 末尾のnは変換する
+        push(tmp);
+        return result;
+    }
 });
