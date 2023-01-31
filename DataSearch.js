@@ -1,4 +1,5 @@
 //ポケモン検索してベース実数地取得
+/*
 function SearchPokemon(pokeID){
     let req = new XMLHttpRequest();  //HTTPでファイルを読み込む
     req.open("GET", "./PokemonDataBase/PokemonData.csv", false);    //ファイル取得
@@ -37,7 +38,45 @@ function SearchPokemon(pokeID){
         }
     }
     CalcStat(pokeID);
+}*/
+
+function SearchPokemon(pokeID){
+    fetch("./PokemonDataBase/PokemonData.csv", {method: "GET"}) //ファイル取得
+    .then(response => response.text()) //csvの中身をテキストで受け取る
+    .then(data =>{
+        //データをポケモンごとのリスト化
+        let lines = data.split('\n');
+        //攻撃側か防御側か決定
+        if (pokeID == 1) {
+            var poke = document.getElementById("form1"); //ポケモン1
+        }else{
+            var poke = document.getElementById("form2"); //ポケモン2
+        }
+        //ポケモン名取得
+        let name = poke.getElementsByClassName("poke-name")[0].value;
+        //ポケモンをcsvから検索しあれば実数値計算
+        for (let i=0; i < lines.length; i++){
+            let cells = lines[i].split(",");
+
+            if(cells[0] == name){
+                //タイプ取得
+                let type = poke.getElementsByClassName("poke-type");
+                type[0].value = cells[7];
+                type[1].value = cells[8];
+                for (let j=0; j<6; j++){
+                    let result = parseInt(cells[j+1]); //種族値
+                    poke.getElementsByClassName("base")[j].innerHTML = result;
+                }
+                break;
+            }
+        }
+        CalcStat(pokeID);
+    })
+    .catch(error => {//エラー処理
+        console.error('通信に失敗しました', error);
+    })
 }
+
 //実数値計算
 function CalcStat(pokeID) {
     if (pokeID == 1) {
