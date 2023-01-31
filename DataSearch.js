@@ -39,7 +39,7 @@ function SearchPokemon(pokeID){
     }
     CalcStat(pokeID);
 }*/
-
+//ポケモンを検索して数値計算関数を呼び出す
 function SearchPokemon(pokeID){
     fetch("./PokemonDataBase/PokemonData.csv", {method: "GET"}) //ファイル取得
     .then(response => response.text()) //csvの中身をテキストで受け取る
@@ -77,7 +77,7 @@ function SearchPokemon(pokeID){
     })
 }
 
-//実数値計算
+//実数値計算関数
 function CalcStat(pokeID) {
     if (pokeID == 1) {
         var poke = document.getElementById("form1"); //ポケモン1
@@ -185,7 +185,9 @@ function CalcStat(pokeID) {
     }
     return;
 }
-//わざ検索
+
+//わざを検索し基本情報を記録
+/*
 function MoveSearch(num){
     let req = new XMLHttpRequest();  //HTTPでファイルを読み込む
     req.open("GET", "./PokemonDataBase/MoveData.csv", false);    //ファイル取得
@@ -243,6 +245,63 @@ function MoveSearch(num){
         }
     }
     
+}*/
+
+//わざを検索し基本情報を記録
+function MoveSearch(num){
+    fetch("./PokemonDataBase/MoveData.csv", {method: "GET"}) //データファイル取得
+    .then(response => response.text()) //csvの中身をテキストで取得
+    .then(data =>{
+        //データをわざごとのリスト化
+        let lines = data.split("\n");
+        //わざのElement取得
+        let moveid;
+        //わざの隠しパラメータ
+        let parameter;
+        switch (num) {
+            case 1:
+                moveid = "move1";
+                parameter = document.move1.parameter;
+                break;
+            case 2:
+                moveid = "move2";
+                parameter = document.move2.parameter;
+                break;
+            case 3:
+                moveid = "move3";
+                parameter = document.move3.parameter;
+                break;
+            default:
+                break;
+        }
+        let move = document.getElementById(moveid);    //わざ
+        //わざ名取得
+        let name = move.getElementsByClassName("move-name")[0].value;
+        
+        //わざをcsvから検索しあればデータ取得
+        for (let i = 1; i < lines.length; i++) {
+            let cells = lines[i].split(",");
+            
+            if(cells[0] == name){
+                move.getElementsByClassName("move-type")[0].value = cells[1];    //タイプ
+                move.getElementsByClassName("category")[0].value = cells[2];    //分類
+                move.getElementsByClassName("power")[0].value = cells[3];       //いりょく
+                parameter[0].value = cells[5]; //直接
+                parameter[1].value = cells[8]; //音技
+                parameter[2].value = cells[9]; //パンチ
+                parameter[3].value = cells[10]; //すてみ
+                parameter[4].value = cells[11]; //かみつき
+                parameter[5].value = cells[12]; //斬撃
+                parameter[6].value = cells[13]; //波動
+                parameter[7].value = cells[7];  //範囲
+                parameter[8].value = cells[14]; //ちからずく対応追加効果
+                return;
+            }
+        }
+    })
+    .catch(error => {//エラー処理
+        console.error('通信に失敗しました', error);
+    })
 }
 
 //ポケモン1用関数
