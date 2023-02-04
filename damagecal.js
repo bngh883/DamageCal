@@ -715,9 +715,9 @@ function clickResultDisp(num, detail){
             normals[i].innerHTML = result_detail;
             criticals[i].innerHTML = result_critical;
             //　2発未満が青、1発以上が赤
-            if (defHP < result_detail) {
+            if (defHP <= result_detail) {
                 normals[i].style.color = '#ff0000';
-            }else if (defHP < result_detail*2) {
+            }else if (defHP <= result_detail*2) {
                 normals[i].style.color = '#000000';
             }else{
                 normals[i].style.color = '#0000ff';
