@@ -1,29 +1,29 @@
-h1{font-size: 30px; color: black;}
-h3{font-size: 20px; color: red;}
+h1{font-size: 30pt; color: black;}
+h3{font-size: 20pt; color: red;}
 
 /*環境*/
 .environment{
     display: flex;
     width:100%;
-    padding: 10px;
+    padding: 10pt;
 }
 .environment div{
-    padding: 10px;
+    padding: 10pt;
 }
 .environment form{
-    margin: 10px;
+    margin: 10pt;
 }
 /*サブ環境*/
 .sub-environment{
     display: flex;
 }
 .sub-environment label{
-    margin-left: 30px;
+    margin-left: 30pt;
     width: 100%;
-    font-size: 17px;
+    font-size: 12pt;
 }
 /*わざ*/
-@media (min-width:520px) {
+@media (min-width:520pt) {
     .moves{
         display: flex;
     }
@@ -39,27 +39,27 @@ h3{font-size: 20px; color: red;}
 }
 .moves form{
     background-color: rgb(182, 255, 153);
-    padding: 10px;
-    margin: 5px;
+    padding: 10pt;
+    margin: 5pt;
 }
 
 /*ポケモン*/
 .poke-name{
-    width: 150px;
+    width: 150pt;
 }
 #form1{
     background-color: rgb(255, 197, 149);
-    padding: 10px;
-    margin: 5px;
+    padding: 10pt;
+    margin: 5pt;
 }
 .options{
-    font-size: 15px;
+    font-size: 12pt;
 }
 
 #form2{
     background-color: rgb(142, 246, 250);
-    padding: 10px;
-    margin: 5px;
+    padding: 10pt;
+    margin: 5pt;
 }
 table{
     border: none;
@@ -68,7 +68,7 @@ table{
     width: 100%;
     text-align: center;
 }
-@media (min-width:1260px) {
+@media (min-width:1000pt) {
     .pokemon{
         display: flex;
     }
@@ -93,17 +93,17 @@ input[type="radio"]:checked + label{
 .label{
     display: block; /*ブロックレベル要素か*/
     float:left;
-    font-size: 15px;
-    width: 60px;
-    height: 25px;
-    padding: 5px;
+    font-size: 15pt;
+    width: 60pt;
+    height: 25pt;
+    padding: 5pt;
     text-align: center;
-    margin: 0px; /*ラベル外側の余白*/
-    border: 2px solid black; /*ラベルの境界線*/
+    margin: 0pt; /*ラベル外側の余白*/
+    border: 2pt solid black; /*ラベルの境界線*/
 }
 
 /*フッター*/
 footer{
-    border-top: solid 1px lightgray;
+    border-top: solid 1pt lightgray;
     text-align: center;
 }
