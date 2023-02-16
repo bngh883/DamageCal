@@ -60,7 +60,7 @@ function clickResultDisp(num, detail){
     let stab = 1.0;
     if (move_type==poke1_type1 || move_type==poke1_type2 || move_type==poke1_terastal){     
         stab = 1.5;
-        if (poke1_type1==poke1_terastal || poke1_type2==poke1_terastal) {
+        if (poke1_type1==poke1_terastal || (poke1_type2==poke1_terastal && poke1_type2!="0")) {
             stab = 2.0;
         }
     }
