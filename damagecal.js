@@ -593,23 +593,13 @@ function clickResultDisp(num, detail){
     //砂＋いわタイプ、雪＋こおりタイプ補正（切り捨て）
     switch (weather_value) {
         case "sandstorm":
-            if (cat == "2") {
-                if (poke2_terastal = "13"){
-                    def = Math.floor(def * 1.5);
-                }
-                else if ("13" in poke2_type){
-                    def = Math.floor(def * 1.5);
-                }
+            if (cat == "2" && poke2_type1 == "13") {
+                def = Math.floor(def * 1.5);
             }
             break;
         case "snow":
-            if (cat == "1") {
-                if (poke2_terastal = "6"){
-                    def = Math.floor(def * 1.5);
-                }
-                else if ("6" in poke2_type){
-                    def = Math.floor(def * 1.5);
-                }
+            if (cat == "1" && poke2_type1 == "6") {
+                def = Math.floor(def * 1.5);
             }
             break;
         default:
