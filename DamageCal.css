@@ -63,7 +63,7 @@ h3{font-size: 20pt; color: red;}
 }
 table{
     border: none;
-    border-collapse: separate;
+    border-collapse: collapse;
     table-layout: auto;
     width: 100%;
     text-align: center;
