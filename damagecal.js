@@ -136,7 +136,7 @@ function clickResultDisp(num, detail){
             pwr_cor = Math.round(pwr_cor * 1.5);
         }
     }
-    //わざわい
+    //わざわい系
     if (document.getElementById("Vessel").checked && cat == "2") {
         pwr_cor = Math.round(pwr_cor * 0.75);
     }
