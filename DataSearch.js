@@ -145,7 +145,7 @@ function CalcStat(pokeID) {
     return;
 }
 
-//わざを検索し基本情報を記録
+//わざを検索し基本情報を記録する
 function MoveSearch(num){
     fetch("./PokemonDataBase/MoveData.csv", {method: "GET"}) //データファイル取得
     .then(response => response.text()) //csvの中身をテキストで取得
