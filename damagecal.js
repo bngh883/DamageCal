@@ -1,6 +1,6 @@
 //ダメージ計算関数
 function clickResultDisp(num, detail){
-    //環境
+    //場の環境
     let style_value = document.getElementById("battlestyle").battlestyle.value;  //シングルかダブル
     let weather_value = document.getElementById("weather").weather.value;        //天候
     let field_value = document.getElementById("field").field.value;              //フィールド
