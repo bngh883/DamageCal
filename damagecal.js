@@ -594,12 +594,22 @@ function clickResultDisp(num, detail){
     switch (weather_value) {
         case "sandstorm":
             if (cat == "2") {
-                def = Math.floor(def * 1.5);
+                if (poke2_terastal = "13"){
+                    def = Math.floor(def * 1.5);
+                }
+                else if ("13" in poke2_type){
+                    def = Math.floor(def * 1.5);
+                }
             }
             break;
         case "snow":
             if (cat == "1") {
-                def = Math.floor(def * 1.5);
+                if (poke2_terastal = "6"){
+                    def = Math.floor(def * 1.5);
+                }
+                else if ("6" in poke2_type){
+                    def = Math.floor(def * 1.5);
+                }
             }
             break;
         default:
