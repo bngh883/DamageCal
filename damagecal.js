@@ -102,7 +102,7 @@ function clickResultDisp(num, detail){
         }
     }
     
-    //やけど
+    //やけど補正
     let burn = 0;
     if (document.getElementById("Burned").checked) {
         burn = 1;
