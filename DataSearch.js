@@ -14,6 +14,11 @@ function SearchPokemon(pokeID){
         //ポケモン名取得
         let name = poke.getElementsByClassName("poke-name")[0].value;
 
+        if ("オーガポン(" in name){
+            let item = poke.getElementByClassName("item");
+            item.value = "1";
+        }
+
         //ポケモンをcsvから検索しあれば実数値計算
         for (let i=0; i < lines.length; i++){
             let cells = lines[i].split(",");
