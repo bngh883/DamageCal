@@ -613,6 +613,9 @@ function clickResultDisp(num, detail){
             if (move_type == "4" && poke1_landed == 1) {
                 pwr_cor = Math.round(pwr_cor * 5325 / 4096);
             }
+            if (move_name == "サイコブレイド") {
+                pwr_cor = Math.round(pwr_cor * 6144 / 4096);
+            }
             break;
         case "psychic":
             if (move_name == "ワイドフォース") {
@@ -670,7 +673,8 @@ function clickResultDisp(num, detail){
             if (move_type == "2") {
                 result = toInt(result * 1.5);
             }else if (move_type == "3") {
-                result = toInt(result / 2);
+                if (move_name == "ハイドロスチーム") result = toInt(result *1.5);
+                else result = toInt(result / 2);
             }
             break;
         case "rain":
