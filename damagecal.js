@@ -611,7 +611,7 @@ function clickResultDisp(num, detail){
             }
             break;
         case "snow":
-            if (cat == "1" && (poke2_type1 == "13" || poke2_type2 == "13")) {
+            if (cat == "1" && (poke2_type1 == "6" || poke2_type2 == "6")) {
                 def = Math.floor(def * 1.5);
             }
             break;
